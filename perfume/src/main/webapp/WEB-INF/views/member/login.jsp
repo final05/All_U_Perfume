@@ -30,24 +30,33 @@ console.log(Kakao.isInitialized()); // sdk초기화여부판단
 //카카오로그인
 function kakaoLogin() {
     Kakao.Auth.login({
-    	scope : 'profile_nickname, profile_image, account_email, gender, birthday',
+        scope : 'profile_nickname, profile_image, account_email, gender, birthday',
       success: function (response) {
         Kakao.API.request({
           url: '/v2/user/me',
           success: function (response) {
-        	  console.log(response)
-          },
-          fail: function (error) {
-            console.log(error)
-          },
+
+              $.ajax({
+                  url: "/member/check",
+                    data: JSON.stringify({
+                        id : response.id,
+                        name : response.properties.nickname,
+                        email : response.kakao_account.email
+                    }),
+                    type: "POST",
+                    contentType : "application/json; charset=UTF-8",
+                    success: function(data){
+                        alert('성공');
+                    }
+              });
+
+              window.location = "/member/login";
+          }
         })
-      },
-      fail: function (error) {
-        console.log(error)
-      },
+      }
     })
-  	window.location = "/member/login";
   }
+            
 //카카오로그아웃  
 function kakaoLogout() {
     if (Kakao.Auth.getAccessToken()) {
