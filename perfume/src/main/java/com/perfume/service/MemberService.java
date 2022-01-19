@@ -8,6 +8,8 @@ public interface MemberService {
 	
 	public int memberRegister (MemberDTO memberDTO);
 	
+	public int memberKakaoRegister(MemberDTO memberDTO);
+	
 	public int memberImgUpdate (MemberDTO memberDTO);
 	
 	public int memberIdCheck (String id);

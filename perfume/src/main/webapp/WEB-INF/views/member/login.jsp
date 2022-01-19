@@ -19,7 +19,6 @@
 	</form>
 
 <a href="javascript:kakaoLogin();"><img src="/resources/images/kakao_login_medium_wide.png" alt="카카오계정 로그인" style="height: 50px;"/></a></br>
-<a href="javascript:kakaoLogout();"/>
 <input type="button" value="로그아웃 하기" onclick="window.location='javascript:kakaoLogout();'" />
 
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -30,27 +29,59 @@ console.log(Kakao.isInitialized()); // sdk초기화여부판단
 //카카오로그인
 function kakaoLogin() {
     Kakao.Auth.login({
-        scope : 'profile_nickname, profile_image, account_email, gender, birthday',
-      success: function (response) {
+        scope : 'profile_nickname, profile_image, account_email, gender',
+      success: function (response) {	
+    	  console.log(response.access_token)
+    	  function token_result(){
+    		  var result;
+    		  $.ajax({
+	    		  url: "/member/tokenCheck",
+	              data: JSON.stringify({
+	              	api_token : response.access_token
+	              }),
+	              type: "POST",
+	              contentType : "application/json; charset=UTF-8",
+	              async: false,
+	              success: function(data){
+	                  result = data;
+	              }
+	    	  });
+    		  return result;
+    	  }
+	    	  
         Kakao.API.request({
           url: '/v2/user/me',
           success: function (response) {
-
+        	  var token = token_result();
+        	  console.log(token);
               $.ajax({
-                  url: "/member/check",
+                  url: "/member/kakaoCheck",
                     data: JSON.stringify({
-                        id : response.id,
+                        id : response.id+"Kakao",
                         name : response.properties.nickname,
-                        email : response.kakao_account.email
+                        img : response.kakao_account.profile.profile_image_url,
+                        email : response.kakao_account.email,
+                        gender : response.kakao_account.gender,
+                        api_token : token
                     }),
                     type: "POST",
                     contentType : "application/json; charset=UTF-8",
                     success: function(data){
                         alert('성공');
+                        
+                        if(data == 1){
+                        	 window.location = "/member/login";
+                        }else{
+                        	alert("");
+                        	window.location.reload();
+                        }
+                        
+                        
+
+                       
                     }
               });
 
-              window.location = "/member/login";
           }
         })
       }

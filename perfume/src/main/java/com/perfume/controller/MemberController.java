@@ -93,14 +93,23 @@ public class MemberController {
 		return "member/loginPro";
 	}
 		
-	@RequestMapping("check")
-	public @ResponseBody String check(@RequestBody MemberDTO dto) {
-		log.warn("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+	@RequestMapping("kakaoCheck")
+	public @ResponseBody int check(@RequestBody MemberDTO dto) {
 		log.warn(""+dto);
-		System.out.println(""+dto);
-		return "member/login";
+		int result = 0;
+		result = service.memberKakaoRegister(dto);
+		return result;
 	}
 	
+	@RequestMapping("tokenCheck")
+	public @ResponseBody String tokenCheck(@RequestBody MemberDTO dto) {
+		log.warn(""+dto);
+		if(dto != null) {
+			dto.setApi_token("K_Token");
+			log.warn(dto.getApi_token());
+		}
+		return dto.getApi_token();
+	}
 	
 	@RequestMapping("logout")
 	public String logout(HttpSession session) {

@@ -8,6 +8,8 @@ public interface MemberMapper {
 	
 	public int register(MemberDTO memberDTO);
 	
+	public int kakaoRegister(MemberDTO memberDTO);
+	
 	public int imgUpdate (MemberDTO memberDTO);
 	
 	public int idCheck(String id);
@@ -19,4 +21,5 @@ public interface MemberMapper {
 	public int pwUpdate(MemberDTO memberDTO);
 	
 	public int tmpDelete(String id);
+
 }
