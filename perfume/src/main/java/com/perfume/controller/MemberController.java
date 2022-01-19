@@ -94,16 +94,24 @@ public class MemberController {
 	}
 		
 	@RequestMapping("kakaoCheck")
-	public @ResponseBody int check(@RequestBody MemberDTO dto) {
-		log.warn(""+dto);
+	public @ResponseBody int check(@RequestBody MemberDTO dto, HttpSession session) {
+		
 		int result = 0;
-		result = service.memberKakaoRegister(dto);
+		
+		if(service.memberIdCheck(dto.getId()) == 1) {
+			result = 1;
+		} else {
+			result = service.memberKakaoRegister(dto);
+		}
+		
+		session.setAttribute("kid", dto.getId());
 		return result;
 	}
 	
 	@RequestMapping("tokenCheck")
-	public @ResponseBody String tokenCheck(@RequestBody MemberDTO dto) {
-		log.warn(""+dto);
+	public @ResponseBody String tokenCheck(@RequestBody MemberDTO dto, HttpSession session) {
+		
+		session.setAttribute("token", dto.getApi_token());
 		if(dto != null) {
 			dto.setApi_token("K_Token");
 			log.warn(dto.getApi_token());
@@ -116,11 +124,25 @@ public class MemberController {
 		session.invalidate();
 		return "member/logout";
 	}
-		
+	
+	@RequestMapping("kLogout")
+	public @ResponseBody String kLogout(HttpSession session) {
+		session.invalidate();
+		return "member/login";
+	}
+	
 	@RequestMapping("userInfo")
 	public String userInfo(HttpSession session, Model model) {
 		String id = (String)session.getAttribute("id");
-		model.addAttribute("MemberDTO", service.memberUserInfo(id));
+		String kid = (String)session.getAttribute("kid");
+		
+		if(id != null) {
+			model.addAttribute("MemberDTO", service.memberUserInfo(id));
+		} else if(kid != null) {
+			model.addAttribute("MemberDTO", service.memberUserInfo(kid));
+		}
+		
+		
 		return "member/userInfo";
 	}
 		
@@ -178,7 +200,7 @@ public class MemberController {
 	public String delete() {
 		return "member/delete";	
 	}
-		
+	
 	@RequestMapping("deletePro")
 	public String deletePro(MemberDTO dto, Model model, HttpSession session) {
 		int result = service.memberLoginCheck(dto);
@@ -189,5 +211,17 @@ public class MemberController {
 		model.addAttribute("result", result);
 		return "member/deletePro";
 	}
-
+	
+	@RequestMapping("kakaoDeletePro")
+	public @ResponseBody int kakaoDeletePro(@RequestBody MemberDTO dto, HttpSession session) {
+		log.warn("kakaoDeletePro // "+dto);
+		int result = 0;
+		int check = service.memberKLoginCheck(dto);
+		if(check == 1) {
+			result = service.memberKakaoDelete(dto);
+			session.invalidate();
+		}
+		return result;
+	}
+	
 }

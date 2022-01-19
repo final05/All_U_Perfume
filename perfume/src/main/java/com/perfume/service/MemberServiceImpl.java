@@ -64,6 +64,16 @@ public class MemberServiceImpl implements MemberService{
 		return mapper.tmpDelete(id);
 	}
 
+	@Override
+	public int memberKakaoDelete(MemberDTO memberDTO) {
+		return mapper.kakaoDelete(memberDTO);
+	}
+
+	@Override
+	public int memberKLoginCheck(MemberDTO memberDTO) {
+		return mapper.kLoginCheck(memberDTO);
+	}
+
 	
 
 }

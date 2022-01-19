@@ -24,7 +24,7 @@
 	
 	function nullCheck(){
 		if($("#pw").val() == ""){
-			$("#pwCheck").html("<font color='red'>중복</font>");
+			$("#pwCheck").html("<font color='red'>비밀번호를 입력해주세요.</font>");
 			return false;
 		}
 	}
