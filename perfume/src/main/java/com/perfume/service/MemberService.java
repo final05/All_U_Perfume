@@ -6,6 +6,8 @@ public interface MemberService {
 	
 	public int memberLoginCheck (MemberDTO memberDTO);
 	
+	public int memberKLoginCheck (MemberDTO memberDTO);
+	
 	public int memberRegister (MemberDTO memberDTO);
 	
 	public int memberKakaoRegister(MemberDTO memberDTO);
@@ -21,4 +23,6 @@ public interface MemberService {
 	public int memberPwUpdate(MemberDTO memberDTO);
 	
 	public int memberTmpDelete(String id);
+	
+	public int memberKakaoDelete(MemberDTO memberDTO);
 }
