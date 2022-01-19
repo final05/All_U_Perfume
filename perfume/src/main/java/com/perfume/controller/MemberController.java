@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -92,6 +93,24 @@ public class MemberController {
 		return "member/loginPro";
 	}
 		
+	@RequestMapping("kakaoCheck")
+	public @ResponseBody int check(@RequestBody MemberDTO dto) {
+		log.warn(""+dto);
+		int result = 0;
+		result = service.memberKakaoRegister(dto);
+		return result;
+	}
+	
+	@RequestMapping("tokenCheck")
+	public @ResponseBody String tokenCheck(@RequestBody MemberDTO dto) {
+		log.warn(""+dto);
+		if(dto != null) {
+			dto.setApi_token("K_Token");
+			log.warn(dto.getApi_token());
+		}
+		return dto.getApi_token();
+	}
+	
 	@RequestMapping("logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
