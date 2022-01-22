@@ -11,19 +11,23 @@
 	]]>
 	</select>
 	
+	<!--  게시글 작성  -->
 	<insert id="noticeinsert" parameterType="com.perfume.beans.BoardDTO">
 		insert into tbl_board(boardnum,b_number,writer,auth, password, subject, content) 
 			values(#{boardnum},SEQ_TBL_BOARD.nextval,#{writer},#{auth},#{password},#{subject},#{content})
 	</insert>
 	
-	<select id="noticeread" resultType="com.perfume.beans.BoardDTO">
+	<!--  게시글 조회수 증가 -->
+	<select id="noticeReadCount" resultType="com.perfume.beans.BoardDTO">
 		select * from tbl_board where b_number = #{b_number}
 	</select>
 	
+	<!--  게시글 삭제 -->
 	<delete id="noticedelete">
 		delete tbl_board where b_number = #{b_number}
 	</delete>
 	
+	<!--  게시글 수정  -->
 	<update id="noticeupdate">
 		update tbl_board set subject=#{subject}, reg_date = sysdate 
 			where b_number = #{b_number}

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Data;
 import lombok.Setter;
@@ -26,7 +27,6 @@ public class NoticeController {
 	
 	@Setter(onMethod_=@Autowired)
 	private NoticeBoardService noticeservice;
-	private BoardDTO boardDTO;
 	
 	@RequestMapping("notice")
 	public String NoticeList(Model model) {
@@ -34,13 +34,54 @@ public class NoticeController {
 		log.info("게시판 목록 페이지 진입");
 		model.addAttribute("list", noticeservice.getList());
 		log.info("---------------dpfos;'fk'sdkf';skdfl;sf l;d-------");
-		return "board/notice";		
+		return "board/notice/notice";		
 	}
 
+	// 공지 내용 보기 + 조뢰수 증가
 	@RequestMapping("noticeContent")
-	public String content() {
-		return "board/noticeContent";
+	public String content(Model model, RedirectAttributes rttr, BoardDTO boardDTO) {
+		log.info("============/borad/readcount?=b_number"+boardDTO.getB_number());
+		noticeservice.noticeReadCount(boardDTO.getB_number());
+		rttr.addAttribute("b_number", boardDTO.getB_number());
+		return "board/notice/noticeContent";
 	}
 	
+	// 공지 글 작성 Form
+	@RequestMapping("write")
+	public String writeForm(Model model, BoardDTO boardDTO) {
+		log.info("============/borad/write");
+		return "board/notice/write";
+	}
+		
+	// 공지 글 작성 Pro
+	@RequestMapping("writePro") 
+	public String writePro(Model model, BoardDTO boardDTO) {
+		log.info("============/borad/writePro");
+		noticeservice.noticeinsert(boardDTO);
+		return "board/notice/writePro";
+	}
 	
+	// 공지 글 수정 Form
+	
+	@RequestMapping("updateForm")
+	public String updateForm(Model model, BoardDTO boardDTO) {
+		log.info("==============board/notice/updateForm"+boardDTO.getB_number());
+		return "board/notice/updateForm";
+	}
+	
+	// 공지 글 수정 Pro
+	@RequestMapping("updatePro")
+	public String updatePro(Model model, BoardDTO boardDTO) {
+		log.info("==============board/notice/updatePro"+boardDTO.getB_number());
+		noticeservice.noticeupdate(boardDTO);
+		return "board/notice/updatePro";
+	}
+	
+	// 공지 글 삭제
+	@RequestMapping("delete") 
+	public String delete(Model model, BoardDTO boardDTO) {
+		log.info("==============board/notice/updatePro"+boardDTO.getB_number());
+		noticeservice.noticedelete(0);
+		return "board/notice/delete";
+	}
 }

@@ -6,11 +6,26 @@
 <title>공지사항 게시판</title>
 <h1> 공지사항 게시판 </h1>
 
-	<c:forEach items="${list}" var="boardDTO" >
-	글 번호 : ${boardDTO.b_number} |
-	<a href="/perfume/noticeContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> |
-	작성자 : ${boardDTO.auth} |
-	작성일 : ${boardDTO.reg_date} |
-	조회수 : ${boardDTO.readcount} |
-	<br />
-</c:forEach>
+	<form action="/perfume/write" method="post">
+		<input type = button value = "글 쓰기" />
+	</form>
+<table border = "1" >
+	<tr>
+		<th> 글번호 </th>
+		<th> 글제목 </th>
+		<th> 작성자 </th>
+		<th> 작성일 </th>
+		<th> 조회수 </th>
+	</tr> 
+		<c:forEach items="${list}" var="boardDTO" > 
+		<tr>
+		<td> ${boardDTO.b_number} </td>
+		<td> <a href="/perfume/noticeContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> </td>
+		<td> ${boardDTO.auth} </td>
+		<td> ${boardDTO.reg_date} </td>
+		<td> ${boardDTO.readcount} </td>
+	</tr>
+	</c:forEach>
+</table>
+
+	

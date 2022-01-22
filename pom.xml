@@ -215,6 +215,13 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>	
+		
+		<!--  -->
+		<dependency>
+   			<groupId>com.oracle.database.jdbc</groupId>
+  			<artifactId>ojdbc6</artifactId>
+   			<version>11.2.0.4</version>
+		</dependency>
 
 	<dependency>
       <groupId>org.jsoup</groupId>

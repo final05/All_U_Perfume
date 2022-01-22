@@ -16,7 +16,7 @@ public interface NoticeBoardMapper {
 	
 	public int noticeinsert(BoardDTO board);
 	
-	public BoardDTO noticeread(int b_number);
+	public BoardDTO noticeReadCount(int b_number);
 	
 	public int noticedelete(int b_number);
 	
