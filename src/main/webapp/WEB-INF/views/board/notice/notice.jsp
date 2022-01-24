@@ -7,8 +7,10 @@
 <h1> 공지사항 게시판 </h1>
 
 	<form action="/perfume/write" method="post">
-		<input type = button value = "글 쓰기" />
+		<input type = "submit" value = "글 쓰기" />
 	</form>
+
+
 <table border = "1" >
 	<tr>
 		<th> 글번호 </th>

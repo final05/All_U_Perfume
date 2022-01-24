@@ -41,7 +41,7 @@ public class NoticeController {
 	@RequestMapping("noticeContent")
 	public String content(Model model, RedirectAttributes rttr, BoardDTO boardDTO) {
 		log.info("============/borad/readcount?=b_number"+boardDTO.getB_number());
-		noticeservice.noticeReadCount(boardDTO.getB_number());
+		// noticeservice.noticeContent(boardDTO.getB_number());
 		rttr.addAttribute("b_number", boardDTO.getB_number());
 		return "board/notice/noticeContent";
 	}
@@ -50,6 +50,7 @@ public class NoticeController {
 	@RequestMapping("write")
 	public String writeForm(Model model, BoardDTO boardDTO) {
 		log.info("============/borad/write");
+		log.info("boardDTO =" + boardDTO);
 		return "board/notice/write";
 	}
 		
@@ -57,8 +58,8 @@ public class NoticeController {
 	@RequestMapping("writePro") 
 	public String writePro(Model model, BoardDTO boardDTO) {
 		log.info("============/borad/writePro");
-		noticeservice.noticeinsert(boardDTO);
-		return "board/notice/writePro";
+		model.addAttribute("result", noticeservice.noticeinsert(boardDTO));
+		return "board/notice/writePro";	
 	}
 	
 	// 공지 글 수정 Form

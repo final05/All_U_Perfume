@@ -30,9 +30,9 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 	}
 
 	@Override
-	public BoardDTO noticeReadCount(int b_number) {
+	public BoardDTO noticeContent(BoardDTO board) {
 		// TODO Auto-generated method stub
-		return noticemapeer.noticeReadCount(b_number);
+		return noticemapeer.noticeContent(board);
 	}
 
 	@Override
