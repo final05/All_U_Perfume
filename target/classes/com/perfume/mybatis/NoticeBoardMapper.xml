@@ -29,7 +29,7 @@
 	
 	<!--  게시글 수정  -->
 	<update id="noticeupdate">
-		update tbl_board set subject=#{subject}, content=#{content}reg_date = sysdate 
+		update tbl_board set subject=#{subject}, content=#{content}, reg_date = sysdate 
 			where b_number = #{b_number}
 	</update>
 	

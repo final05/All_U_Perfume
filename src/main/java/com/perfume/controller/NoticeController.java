@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 @Controller
+@Log4j
 @Slf4j
 @RequestMapping("perfume")
 public class NoticeController {
@@ -42,7 +43,9 @@ public class NoticeController {
 	public String content(Model model, RedirectAttributes rttr, BoardDTO boardDTO) {
 		log.info("============/borad/readcount?=b_number"+boardDTO.getB_number());
 		// noticeservice.noticeContent(boardDTO.getB_number());
-		rttr.addAttribute("b_number", boardDTO.getB_number());
+		// rttr.addAttribute("b_number", boardDTO.getB_number());
+		model.addAttribute("boardDTO", noticeservice.noticeContent(boardDTO));
+		// log.info("content" + boardDTO.getContent());
 		return "board/notice/noticeContent";
 	}
 	
@@ -64,17 +67,17 @@ public class NoticeController {
 	
 	// 공지 글 수정 Form
 	
-	@RequestMapping("updateForm")
+	@RequestMapping("update")
 	public String updateForm(Model model, BoardDTO boardDTO) {
-		log.info("==============board/notice/updateForm"+boardDTO.getB_number());
-		return "board/notice/updateForm";
+		log.info("==============board/notice/updateForm=="+boardDTO.getB_number());
+		return "board/notice/update";
 	}
 	
 	// 공지 글 수정 Pro
 	@RequestMapping("updatePro")
 	public String updatePro(Model model, BoardDTO boardDTO) {
 		log.info("==============board/notice/updatePro"+boardDTO.getB_number());
-		noticeservice.noticeupdate(boardDTO);
+		model.addAttribute("result", noticeservice.noticeupdate(boardDTO));
 		return "board/notice/updatePro";
 	}
 	
@@ -82,7 +85,14 @@ public class NoticeController {
 	@RequestMapping("delete") 
 	public String delete(Model model, BoardDTO boardDTO) {
 		log.info("==============board/notice/updatePro"+boardDTO.getB_number());
-		noticeservice.noticedelete(0);
 		return "board/notice/delete";
+	}
+	
+	// 공지 글 삭제
+	@RequestMapping("deletePro") 
+	public String deletePro(Model model, int b_number) {
+		// log.info("==============board/notice/updatePro"+boardDTO.getB_number());
+		model.addAttribute("result", noticeservice.noticedelete(b_number));
+		return "board/notice/deletePro";
 	}
 }
