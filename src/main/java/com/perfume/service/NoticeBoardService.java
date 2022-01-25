@@ -10,5 +10,6 @@ public interface NoticeBoardService {
 	public BoardDTO noticeContent(BoardDTO board); // readcount
 	public int noticedelete(int b_number); // 게시글 삭제
 	public int noticeupdate(BoardDTO board); // 게시글 업데이트
+	public int readcount(int b_number); // 조회수 증가
 }
 

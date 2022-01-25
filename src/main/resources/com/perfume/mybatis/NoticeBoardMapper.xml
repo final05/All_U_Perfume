@@ -33,5 +33,9 @@
 			where b_number = #{b_number}
 	</update>
 	
+	<!-- 게시글 조회수 증가 -->
+	<update id="readcount">
+		update tbl_board set readcount = readcount + 1 where b_number = #{b_number}
+	</update>
 	
 </mapper>

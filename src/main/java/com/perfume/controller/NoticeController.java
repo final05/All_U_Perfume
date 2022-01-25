@@ -38,19 +38,17 @@ public class NoticeController {
 		return "board/notice/notice";		
 	}
 
-	// 공지 내용 보기 + 조뢰수 증가
-	@RequestMapping("noticeContent")
-	public String content(Model model, RedirectAttributes rttr, BoardDTO boardDTO) {
+	// 공지 내용 보기 + 조뢰수 증가 + 페이징 처리
+	@RequestMapping("notice/noticeContent")
+	public String content(Model model, RedirectAttributes rttr, BoardDTO boardDTO, int b_number) {
 		log.info("============/borad/readcount?=b_number"+boardDTO.getB_number());
-		// noticeservice.noticeContent(boardDTO.getB_number());
-		// rttr.addAttribute("b_number", boardDTO.getB_number());
 		model.addAttribute("boardDTO", noticeservice.noticeContent(boardDTO));
-		// log.info("content" + boardDTO.getContent());
+		noticeservice.readcount(b_number);
 		return "board/notice/noticeContent";
 	}
 	
 	// 공지 글 작성 Form
-	@RequestMapping("write")
+	@RequestMapping("notice/write")
 	public String writeForm(Model model, BoardDTO boardDTO) {
 		log.info("============/borad/write");
 		log.info("boardDTO =" + boardDTO);
@@ -58,7 +56,7 @@ public class NoticeController {
 	}
 		
 	// 공지 글 작성 Pro
-	@RequestMapping("writePro") 
+	@RequestMapping("notice/writePro") 
 	public String writePro(Model model, BoardDTO boardDTO) {
 		log.info("============/borad/writePro");
 		model.addAttribute("result", noticeservice.noticeinsert(boardDTO));
@@ -67,14 +65,14 @@ public class NoticeController {
 	
 	// 공지 글 수정 Form
 	
-	@RequestMapping("update")
+	@RequestMapping("notice/update")
 	public String updateForm(Model model, BoardDTO boardDTO) {
 		log.info("==============board/notice/updateForm=="+boardDTO.getB_number());
 		return "board/notice/update";
 	}
 	
 	// 공지 글 수정 Pro
-	@RequestMapping("updatePro")
+	@RequestMapping("notice/updatePro")
 	public String updatePro(Model model, BoardDTO boardDTO) {
 		log.info("==============board/notice/updatePro"+boardDTO.getB_number());
 		model.addAttribute("result", noticeservice.noticeupdate(boardDTO));
@@ -82,17 +80,19 @@ public class NoticeController {
 	}
 	
 	// 공지 글 삭제
-	@RequestMapping("delete") 
+	@RequestMapping("notice/delete") 
 	public String delete(Model model, BoardDTO boardDTO) {
 		log.info("==============board/notice/updatePro"+boardDTO.getB_number());
 		return "board/notice/delete";
 	}
 	
 	// 공지 글 삭제
-	@RequestMapping("deletePro") 
+	@RequestMapping("notice/deletePro") 
 	public String deletePro(Model model, int b_number) {
 		// log.info("==============board/notice/updatePro"+boardDTO.getB_number());
 		model.addAttribute("result", noticeservice.noticedelete(b_number));
 		return "board/notice/deletePro";
 	}
+	
+	
 }

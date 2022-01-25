@@ -26,7 +26,7 @@
 		<tr>
 		<td> <input name = "RowCheck" type = "checkbox" value="${boardDTO.b_number }" /></td>
 		<td> ${boardDTO.b_number} </td>
-		<td> <a href="/perfume/noticeContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> </td>
+		<td> <a href="/perfume/notice/noticeContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> </td>
 		<td> ${boardDTO.auth} </td>
 		<td> ${boardDTO.reg_date} </td>
 		<td> ${boardDTO.readcount} </td>

@@ -6,7 +6,7 @@
 <title>공지사항 게시판</title>
 <h1> 공지사항 글 수정 </h1>
 
-    <form action="/perfume/notice/updatePro" method="post">
+    <form action="/perfume/updatePro" method="post">
     	<input type="hidden" name="boardnum" value="${boardDTO.boardnum}">
 		<input type="hidden" name="b_number" value="${boardDTO.b_number}">
     	제 목 : <input type="text" name="subject" /> 

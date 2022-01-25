@@ -36,8 +36,8 @@
 </table>
 
 		<a href="/perfume/notice" role = "button"> 글 목록 </a> 
-		<a href="/perfume/update?b_number=${boardDTO.b_number }" role = "button"> 수정 </a>
-		<a href="/perfume/delete?b_number=${boardDTO.b_number }" role = "button"> 삭제 </a> 
+		<a href="/perfume/notice/update?b_number=${boardDTO.b_number }" role = "button"> 수정 </a>
+		<a href="/perfume/notice/delete?b_number=${boardDTO.b_number }" role = "button"> 삭제 </a> 
 		
 
 

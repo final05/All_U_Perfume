@@ -21,4 +21,6 @@ public interface NoticeBoardMapper {
 	public int noticedelete(int b_number);
 	
 	public int noticeupdate(BoardDTO board);
+	
+	public int readcount(int b_number);
 }

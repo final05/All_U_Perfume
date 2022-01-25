@@ -47,4 +47,10 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 		return noticemapeer.noticeupdate(board);
 	}
 
+	@Override
+	public int readcount(int b_number) {
+		// TODO Auto-generated method stub
+		return noticemapeer.readcount(b_number);
+	}
+
 }
