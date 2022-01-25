@@ -5,7 +5,7 @@
     
 <h1> 향수 추천 게시판 </h1>
 
-	<form action="/perfume/write" method="post">
+	<form action="/perfume/recommendation/write" method="post">
 		<input type = "submit" value = "글 쓰기" />
 	</form>
 	
@@ -25,7 +25,7 @@
 		<tr>
 		<td> <input name = "RowCheck" type = "checkbox" value="${boardDTO.b_number }" /></td>
 		<td> ${boardDTO.b_number} </td>
-		<td> <a href="/perfume/notice/noticeContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> </td>
+		<td> <a href="/perfume/recommendation/recommendationContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> </td>
 		<td> ${boardDTO.auth} </td>
 		<td> ${boardDTO.reg_date} </td>
 		<td> ${boardDTO.readcount} </td>

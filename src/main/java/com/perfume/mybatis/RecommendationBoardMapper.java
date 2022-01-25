@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.perfume.beans.BoardDTO;
 
-public interface recommendationBoardMapper {
+public interface RecommendationBoardMapper {
 	public List<BoardDTO> getrecommendationList(); // 게시판 글 목록 리턴할 메서드
 	public int recommendationinsert(BoardDTO board); // 게시글 작성
 	public BoardDTO recommendaionContent(BoardDTO board); // readcount

@@ -4,7 +4,7 @@ package com.perfume.controller;
 import com.perfume.beans.BoardDTO;
 import com.perfume.controller.NoticeController;
 import com.perfume.service.NoticeBoardService;
-import com.perfume.service.recommendationBoardService;
+import com.perfume.service.RecommendationBoardService;
 
 import java.util.List;
 
@@ -26,10 +26,10 @@ import lombok.extern.slf4j.Slf4j;
 @Log4j
 @Slf4j
 @RequestMapping("perfume")
-public class recommendationController {
+public class RecommendationController {
 	
 	@Setter(onMethod_=@Autowired)
-	private recommendationBoardService recommendationservice;
+	private RecommendationBoardService recommendationservice;
 	
 	@RequestMapping("recommendation")
 	public String NoticeList(Model model) {
@@ -39,48 +39,50 @@ public class recommendationController {
 		return "board/recommendation/recommendation";		
 	}
 
-	// 공지 내용 보기 + 조뢰수 증가 + 페이징 처리
-	@RequestMapping("recommendation/content")
+	// 추천 내용 보기 + 조뢰수 증가 + 페이징 처리
+	@RequestMapping("recommendation/recommendationContent")
 	public String content(Model model, RedirectAttributes rttr, BoardDTO boardDTO, int b_number) {
 		model.addAttribute("boardDTO", recommendationservice.recommendaionContent(boardDTO));
 		recommendationservice.readcount(b_number);
 		return "board/recommendation/recommendationContent";
 	}
 	
-	// 공지 글 작성 Form
+	// 추천 글 작성 Form
 	@RequestMapping("recommendation/write")
 	public String writeForm(Model model, BoardDTO boardDTO) {
 		return "board/recommendation/write";
 	}
 		
-	// 공지 글 작성 Pro
+	// 추천 글 작성 Pro
 	@RequestMapping("recommendation/writePro") 
 	public String writePro(Model model, BoardDTO boardDTO) {
 		model.addAttribute("result", recommendationservice.recommendationinsert(boardDTO));
 		return "board/recommendation/writePro";	
 	}
 	
-	// 공지 글 수정 Form
+	// 추천 글 수정 Form
 	
 	@RequestMapping("recommendation/update")
 	public String updateForm(Model model, BoardDTO boardDTO) {
+		log.info("=======!!!+!+!+!+!+!+"+boardDTO.getSubject());
+		// 값 자체가 안넘어감
 		return "board/recommendation/update";
 	}
 	
-	// 공지 글 수정 Pro
+	// 추천 글 수정 Pro
 	@RequestMapping("recommendation/updatePro")
 	public String updatePro(Model model, BoardDTO boardDTO) {
 		model.addAttribute("result", recommendationservice.recommendationupdate(boardDTO));
 		return "board/recommendation/updatePro";
 	}
 	
-	// 공지 글 삭제
+	// 추천 글 삭제
 	@RequestMapping("recommendation/delete") 
 	public String delete(Model model, BoardDTO boardDTO) {
 		return "board/recommendation/delete";
 	}
 	
-	// 공지 글 삭제
+	// 추천 글 삭제
 	@RequestMapping("recommendation/deletePro") 
 	public String deletePro(Model model, int b_number) {
 		// log.info("==============board/notice/updatePro"+boardDTO.getB_number());

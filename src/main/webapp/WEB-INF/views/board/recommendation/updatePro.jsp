@@ -5,6 +5,6 @@
 <c:if test="${result == 1}">
 	<script>
 		alert("글수정 완료");
-		window.location="/perfume/notice";
+		window.location="/perfume/recommendation";
 	</script>
 </c:if>

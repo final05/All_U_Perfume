@@ -3,10 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>     
 
-<title>공지사항 게시판</title>
-<h1> 공지사항 글 작성 </h1>
+<title>향수 추천 게시판</title>
 
-    <form action="/perfume/writePro" method="post">
+    <form action="/perfume/recommendation/writePro" method="post">
     	<input type="hidden" name="boardnum" value="${boardDTO.boardnum}">
 		<input type="hidden" name="b_number" value="${boardDTO.b_number}">
     	제 목 : <input type="text" name="subject" /> 

@@ -7,15 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.perfume.beans.BoardDTO;
 import com.perfume.mybatis.NoticeBoardMapper;
-import com.perfume.mybatis.recommendationBoardMapper;
+import com.perfume.mybatis.RecommendationBoardMapper;
 
 import lombok.Setter;
 
 @Service
-public class recommendationBoardServiceImpl implements recommendationBoardService {
+public class RecommendationBoardServiceImpl implements RecommendationBoardService {
 	
 	@Setter(onMethod_=@Autowired)
-	private recommendationBoardMapper recommendationmapper;
+	private RecommendationBoardMapper recommendationmapper;
 	
 	@Override
 	public List<BoardDTO> getrecommendationList() {
