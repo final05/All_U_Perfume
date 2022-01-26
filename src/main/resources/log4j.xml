@@ -12,7 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="org.perfume.controller">
-		<level value="info" />
+		<level value="warn" />
 	</logger>
 	
 	<logger name="org.security.controller">

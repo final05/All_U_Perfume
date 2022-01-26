@@ -26,6 +26,15 @@
 }
 
 
+#page {
+position: fixed; 
+bottom: 0; 
+width: 100%; 
+text-align: center;
+}
+		
+
+
 </style>
   <h3>카테고리</h3> </br> 
  <div id="menu">
@@ -37,19 +46,19 @@
  		<li><h4>성별</h4>
  			
  			<ul class="low">
- 				<form:checkbox path="c_gender" value="0"/>여성</form></br>
- 				<form:checkbox path="c_gender" value="1"/>남성</form></br>
- 				<form:checkbox path="c_gender" value="2"/>중성</form></br>
+ 				<input type = "checkbox" name="c_gender" value="0">여성<br/>
+ 				<input type = "checkbox" name="c_gender" value="1">남성<br/>
+ 				<input type = "checkbox" name="c_gender" value="2">중성<br/>
  			</ul> 
  		</li>
  		
  		<li><h4>계절</h4>
  		
  			<ul class="low">
- 			<input type = "checkbox" name="season" value="1">봄</br>
- 			<input type = "checkbox" name="season" value="2">여름</br>
- 			<input type = "checkbox" name="season" value="3">가을</br>
- 			<input type = "checkbox" name="season" value="4">겨울</br>
+ 			<input type = "checkbox" name="c_season" value="1">봄</br>
+ 			<input type = "checkbox" name="c_season" value="2">여름</br>
+ 			<input type = "checkbox" name="c_season" value="3">가을</br>
+ 			<input type = "checkbox" name="c_season" value="4">겨울</br>
  			</ul>
  		</li>
  		
@@ -83,4 +92,21 @@
 
 </c:forEach>
 </table>
+</div>
+
+<div id="page">
+	<ul>
+		<c:if test="${pageMaker.prev}">
+			<a href="${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a>
+		</c:if>
+			
+		<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+			<a href="${pageMaker.makeQuery(idx)}">${idx}</a>	
+		</c:forEach>
+		
+		<c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
+			<a href="list${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
+		</c:if>
+	</ul>
+
 </div>

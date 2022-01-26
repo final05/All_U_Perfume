@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.perfume.beans.Paging;
 import com.perfume.beans.PerfumeDTO;
 import com.perfume.mybatis.PerfumeMapper;
 import lombok.Setter;
@@ -21,14 +22,28 @@ public class PerfumeServiceImpl implements PerfumeService{
 	private PerfumeMapper mapper;
 
 	@Override
-	public List<PerfumeDTO> getList() {
-		return mapper.getList();
+	public List<PerfumeDTO> getDetail(PerfumeDTO perfume )  {
+		return mapper.getDetail(perfume);
 	}
 
 	@Override
 	public int listCount() {
 		return mapper.listCount();
 	}
+
+	@Override
+	public List<PerfumeDTO> listPage(Paging pa) {
+		return mapper.listPage(pa);
+		
+	}
+
+	@Override
+	public List<PerfumeDTO> cate(PerfumeDTO perfume) {
+		
+		return mapper.cate(perfume);
+	}
+
+
 	
 	
 
