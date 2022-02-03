@@ -38,4 +38,17 @@
 		update tbl_board set readcount = readcount + 1 where b_number = #{b_number}
 	</update>
 	
+	<!-- 총 게시글 갯수 출력 -->
+	<select id = "countNoticeBoard" resultType ="int" >
+		select count (*) from tbl_board
+	</select>
+	
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id ="selectNoticeBoard" resultType="com.perfume.beans.PerfumeDTO" parameterType="com.perfume.beans.Paging" >
+		<![CDATA[
+		select * from (select rownum rm from (
+			select * from tbl_board order by b_number desc ) )
+		where rm between #{rowStart} and #{rowEnd}
+		]]>
+	</select>
 </mapper>

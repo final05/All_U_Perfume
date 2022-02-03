@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Select;
 
 import com.perfume.beans.BoardDTO;
+import com.perfume.beans.Paging;
+import com.perfume.beans.PerfumeDTO;
 
 
 
@@ -23,4 +25,11 @@ public interface NoticeBoardMapper {
 	public int noticeupdate(BoardDTO board);
 	
 	public int readcount(int b_number);
+	
+	// 게시글 초총 갯수
+	public int countNoticeBoard();
+	
+	// 페이징 처리 게시글 조회
+	public List<BoardDTO> selectNoticeBoard(Paging pa);
+	
 }

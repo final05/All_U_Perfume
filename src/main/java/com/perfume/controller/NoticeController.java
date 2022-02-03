@@ -1,6 +1,8 @@
 package com.perfume.controller;
 
 import com.perfume.beans.BoardDTO;
+import com.perfume.beans.Pagemaker;
+import com.perfume.beans.Paging;
 import com.perfume.controller.NoticeController;
 import com.perfume.service.NoticeBoardService;
 
@@ -93,6 +95,20 @@ public class NoticeController {
 		model.addAttribute("result", noticeservice.noticedelete(b_number));
 		return "board/notice/deletePro";
 	}
+	
+	// 페이징 처리
+	@RequestMapping("notice/list")
+	public String list(Model model, Paging pa) {
+		model.addAttribute("list",noticeservice.selectNoticeBoard(pa));
+		Pagemaker pagemaker = new Pagemaker();
+		pagemaker.setPa(pa);
+		pagemaker.setTotalCount(noticeservice.countNoticeBoard());
+		
+		model.addAttribute("pageMaker", pagemaker);
+		log.info("=====list====");
+		return "board/notice/noticeBoardPage";
+	}
+	
 	
 	
 }

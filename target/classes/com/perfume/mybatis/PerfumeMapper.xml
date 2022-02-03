@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.perfume.mybatis.PerfumeMapper">
+
+	<!-- 향수 디테일 페이지 목록 -->
+	<select id="getDetail" resultType="com.perfume.beans.PerfumeDTO">
+	 <![CDATA[
+	 select * from tbl_perfume where p_number = #{p_number} or f_name = #{f_name}
+	 ]]>
+	</select>
+
+
+	<!-- 게시물 갯수 -->
+	<select id="listCount" resultType="int">
+	select count(p_number) from tbl_perfume 
+	</select>
+	
+	<!-- 페이징처리 -->
+	<select id="listPage" resultType="com.perfume.beans.PerfumeDTO" parameterType="com.perfume.beans.Paging">
+	<![CDATA[
+	select rm, p_number, f_name from(select rownum rm ,p_number, f_name from
+	(select * from tbl_perfume order by p_number desc) 
+	order by p_number desc) where rm between #{rowStart} and #{rowEnd} 
+	]]>
+	</select>
+	
+	<select id="cate" resultType="com.perfume.beans.PerfumeDTO">
+	<![CDATA[
+	select * from tbl_perfume 
+	where gender in (#{c_gender},#{c_gender},#{c_gender}) 
+	or season in (#{c_season},#{c_season},#{c_season},#{c_season}) 
+	or (f_name like'%'||'#{keyword}'||'%' or f_number like'%'||'#{keyword}'||'%' 
+	or topnote like'%'||'#{keyword}'||'%' or basenote like'%'||'#{keyword}'||'%' or heartnote like'%'||'#{keyword}'||'%' 
+	or gender like'%'||'#{keyword}'||'%' or d_number like'%'||'#{keyword}'||'%' 
+	or topnote_num like'%'||'#{keyword}'||'%' or heartnote_num like'%'||'#{keyword}'||'%' or basenote_num like'%'||'#{keyword}'||'%'
+	or season like'%'||'#{keyword}'||'%')
+	]]>
+	</select>
+
+
+</mapper>
