@@ -6,7 +6,11 @@ public interface MemberMapper {
 	
 	public int loginCheck (MemberDTO memberDTO);
 	
+	public int kLoginCheck (MemberDTO memberDTO);
+	
 	public int register(MemberDTO memberDTO);
+	
+	public int kakaoRegister(MemberDTO memberDTO);
 	
 	public int imgUpdate (MemberDTO memberDTO);
 	
@@ -19,4 +23,7 @@ public interface MemberMapper {
 	public int pwUpdate(MemberDTO memberDTO);
 	
 	public int tmpDelete(String id);
+	
+	public int kakaoDelete(MemberDTO memberDTO);
+
 }

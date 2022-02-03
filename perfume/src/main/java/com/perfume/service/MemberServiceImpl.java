@@ -29,6 +29,12 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public int memberKakaoRegister(MemberDTO memberDTO) {
+
+		return mapper.kakaoRegister(memberDTO);
+	}
+	
+	@Override
 	public int memberImgUpdate(MemberDTO memberDTO) {
 		return mapper.imgUpdate(memberDTO);
 	}
@@ -57,5 +63,17 @@ public class MemberServiceImpl implements MemberService{
 	public int memberTmpDelete(String id) {
 		return mapper.tmpDelete(id);
 	}
+
+	@Override
+	public int memberKakaoDelete(MemberDTO memberDTO) {
+		return mapper.kakaoDelete(memberDTO);
+	}
+
+	@Override
+	public int memberKLoginCheck(MemberDTO memberDTO) {
+		return mapper.kLoginCheck(memberDTO);
+	}
+
+	
 
 }
