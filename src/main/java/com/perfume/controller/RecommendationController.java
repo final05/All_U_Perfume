@@ -64,6 +64,7 @@ public class RecommendationController {
 	
 	@RequestMapping("recommendation/update")
 	public String updateForm(Model model, BoardDTO boardDTO) {
+		model.addAttribute("boardDTO", recommendationservice.recommendaionContent(boardDTO));
 		log.info("=======!!!+!+!+!+!+!+"+boardDTO.getSubject());
 		// 값 자체가 안넘어감
 		return "board/recommendation/update";

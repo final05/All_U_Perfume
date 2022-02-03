@@ -14,7 +14,7 @@
 	<!--  게시글 작성  -->
 	<insert id="recommendationinsert" parameterType="com.perfume.beans.BoardDTO">
 		insert into tbl_board(boardnum,b_number,writer, password, subject, content) 
-			values('2',SEQ_TBL_BOARD.nextval,#{writer, jdbcType=VARCHAR}, jdbcType=VARCHAR},#{password, jdbcType=VARCHAR},#{subject, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR})
+			values('2',SEQ_TBL_BOARD.nextval,#{writer, jdbcType=VARCHAR},#{password, jdbcType=VARCHAR},#{subject, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR})
 	</insert>
 	
 	<!--  게시글 출력 -->
