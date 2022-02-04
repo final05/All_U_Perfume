@@ -6,7 +6,7 @@
 <title>공지사항 게시판</title>
 <h1> 공지사항 게시판 </h1>
 
-	<form action="/perfume/write" method="post">
+	<form action="/perfume/notice/write" method="post">
 		<input type = "submit" value = "글 쓰기" />
 	</form>
 	
@@ -34,4 +34,20 @@
 	</c:forEach>
 </table>
 
+<div id="page">
+	<ul>
+		<c:if test="${pageMaker.prev}">
+			<a href="${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a>
+		</c:if>
+			
+		<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+			<a href="${pageMaker.makeQuery(idx)}">${idx}</a>	
+		</c:forEach>
+		
+		<c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
+			<a href="list${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
+		</c:if>
+	</ul>
+
+</div>
 	

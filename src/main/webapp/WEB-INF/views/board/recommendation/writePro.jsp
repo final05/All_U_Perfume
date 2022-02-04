@@ -7,6 +7,6 @@
 <c:if test="${result == 1}">
 	<script>
 		alert("글쓰기 완료");
-		window.location="/perfume/recommendation";
+		window.location="/perfume/recommendation/list";
 	</script>
 </c:if>

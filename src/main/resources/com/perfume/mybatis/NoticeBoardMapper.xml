@@ -40,15 +40,16 @@
 	
 	<!-- 총 게시글 갯수 출력 -->
 	<select id = "countNoticeBoard" resultType ="int" >
-		select count (*) from tbl_board
+		select count (*) from tbl_board where boardnum = 3;
 	</select>
 	
 	<!-- 페이징 처리 후 게시글 조회 -->
-	<select id ="selectNoticeBoard" resultType="com.perfume.beans.PerfumeDTO" parameterType="com.perfume.beans.Paging" >
+	<select id ="selectNoticeBoard" resultType="com.perfume.beans.BoardDTO" parameterType="com.perfume.beans.Paging" >
 		<![CDATA[
-		select * from (select rownum rm from (
-			select * from tbl_board order by b_number desc ) )
-		where rm between #{rowStart} and #{rowEnd}
+			select rm, b_number, subject, content, auth, reg_date, readcount from 
+				(select rownum rm, b_number, subject, content, auth, reg_date, readcount from
+					(select * from tbl_board where boardnum = 3 order by b_number desc) 
+						order by b_number desc) where rm between #{rowStart} and #{rowEnd}
 		]]>
 	</select>
 </mapper>

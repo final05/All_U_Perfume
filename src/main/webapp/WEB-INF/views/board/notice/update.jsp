@@ -15,4 +15,4 @@
     	첨부파일 : ${boardDTO.filename} <br /> 
     		   <input type="submit" value="글 수정" />
     </form>
-    <a href ="/perfume/notice"> 글 목록 </a>
+    <a href ="/perfume/notice/list"> 글 목록 </a>

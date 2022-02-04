@@ -32,7 +32,7 @@ public class NoticeController {
 	private NoticeBoardService noticeservice;
 	
 	@RequestMapping("notice")
-	public String NoticeList(Model model) {
+	public String NoticeList(Model model, Paging pa) {
 		// http://localhost:8080/perfume/notice
 		log.info("게시판 목록 페이지 진입");
 		model.addAttribute("list", noticeservice.getList());
@@ -98,14 +98,12 @@ public class NoticeController {
 	
 	// 페이징 처리
 	@RequestMapping("notice/list")
-	public String list(Model model, Paging pa) {
-		model.addAttribute("list",noticeservice.selectNoticeBoard(pa));
-		Pagemaker pagemaker = new Pagemaker();
+	public String list(Model model, Paging pa, BoardDTO boardDTO) {
+		model.addAttribute("listpage",noticeservice.selectNoticeBoard(pa));
+		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(noticeservice.countNoticeBoard());
-		
 		model.addAttribute("pageMaker", pagemaker);
-		log.info("=====list====");
 		return "board/notice/noticeBoardPage";
 	}
 	

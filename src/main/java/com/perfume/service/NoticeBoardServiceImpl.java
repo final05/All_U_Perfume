@@ -64,4 +64,10 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 		return noticemapeer.selectNoticeBoard(pa);
 	}
 
+	@Override
+	public List<BoardDTO> cate(BoardDTO board) {
+		// TODO Auto-generated method stub
+		return noticemapeer.cate(board);
+	}
+
 }

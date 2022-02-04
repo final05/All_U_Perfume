@@ -38,4 +38,19 @@
 		update tbl_board set readcount = readcount + 1 where b_number = #{b_number}
 	</update>
 	
+		<!-- 총 게시글 갯수 출력 -->
+	<select id = "countRecommendationBoard" resultType ="int" >
+		select count (*) from tbl_board where boardnum = 2
+	</select>
+	
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id ="selectRecommendationBoard" resultType="com.perfume.beans.BoardDTO" parameterType="com.perfume.beans.Paging" >
+		<![CDATA[
+			select rm, b_number, subject, content, writer, reg_date, readcount from 
+				(select rownum rm, b_number, subject, content, writer, reg_date, readcount from
+					(select * from tbl_board where boardnum = 2 order by b_number desc) 
+						order by b_number desc) where rm between #{rowStart} and #{rowEnd}
+		]]>
+	</select>
+	
 </mapper>

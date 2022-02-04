@@ -2,6 +2,8 @@ package com.perfume.controller;
 
 
 import com.perfume.beans.BoardDTO;
+import com.perfume.beans.Pagemaker;
+import com.perfume.beans.Paging;
 import com.perfume.controller.NoticeController;
 import com.perfume.service.NoticeBoardService;
 import com.perfume.service.RecommendationBoardService;
@@ -33,7 +35,7 @@ public class RecommendationController {
 	
 	@RequestMapping("recommendation")
 	public String NoticeList(Model model) {
-		// http://localhost:8080/perfume/notice
+		// http://localhost:8080/perfume/recommendation
 		log.info("향수 추천 목록 페이지 진입");
 		model.addAttribute("list", recommendationservice.getrecommendationList());
 		return "board/recommendation/recommendation";		
@@ -86,9 +88,20 @@ public class RecommendationController {
 	// 추천 글 삭제
 	@RequestMapping("recommendation/deletePro") 
 	public String deletePro(Model model, int b_number) {
-		// log.info("==============board/notice/updatePro"+boardDTO.getB_number());
 		model.addAttribute("result", recommendationservice.recommendationdelete(b_number));
 		return "board/recommendation/deletePro";
+	}
+	
+	// 페이징 처리
+	
+	@RequestMapping("recommendation/list")
+	public String list(Model model, Paging pa, BoardDTO boardDTO) {
+		model.addAttribute("listpage",recommendationservice.selectRecommendationBoard(pa));
+		Pagemaker pagemaker = new Pagemaker(); // 객체생성
+		pagemaker.setPa(pa);
+		pagemaker.setTotalCount(recommendationservice.countRecommendationBoard());
+		model.addAttribute("pageMaker", pagemaker);
+		return "board/recommendation/recommendationBoardPage";
 	}
 
 }
