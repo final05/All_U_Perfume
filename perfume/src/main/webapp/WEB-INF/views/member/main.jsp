@@ -22,12 +22,22 @@
 	${sessionScope.id}님, 환영합니다!
 	<input type="button" value="로그아웃" onclick="window.location='/member/logout'" />
 	<input type="button" value="회원정보" onclick="window.location='/member/userInfo'" />
+	<input type="button" value="설문하러 가기"  onclick="window.location = '/survey/surveyStart'">
+	<input type="button" value="메인으로 가기"  onclick="window.location = '/main/list'">
+	<input type="button" value="향수 추천페이지"  onclick="window.location = '/perfume/recommendation'">
+	<input type="button" value="공지사항 페이지"  onclick="window.location = '/perfume/notice'">
+	
 </c:if>
 
 <c:if test="${sessionScope.kid != null}">
 	${sessionScope.kid}님, 환영합니다!
 	<input type="button" value="로그아웃" onclick="kakaoLogout();" />
 	<input type="button" value="회원정보" onclick="window.location='/member/userInfo'" />
+	<input type="button" value="설문하러 가기"  onclick="window.location = '/survey/surveyStart'">
+	<input type="button" value="메인으로 가기"  onclick="window.location = '/main/list'">
+	<input type="button" value="향수 추천페이지"  onclick="window.location = '/perfume/recommendation'">
+	<input type="button" value="공지사항 페이지"  onclick="window.location = '/perfume/notice'">
+	
 </c:if>
 
 <script>
