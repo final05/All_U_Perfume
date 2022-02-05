@@ -46,6 +46,7 @@ dd {
 
 
 <h3>카테고리</h3> </br> 
+<input type="button" value="메인으로 가기"  onclick="window.location = '/main/list'">
 <div class="menu">
 	<form action="/main/search" method="post">
  

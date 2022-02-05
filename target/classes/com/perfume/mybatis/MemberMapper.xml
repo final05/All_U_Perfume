@@ -9,9 +9,19 @@
 		select count(*) from tbl_member where id =#{id} and pw = #{pw} and auth !='탈퇴'
 	</select>
 	
+	<select id = "kLoginCheck" resultType="int">
+		select count(*) from tbl_member where id =#{id} and api_token = 'K_Token'
+	</select>
+	
+	
 	<insert id = "register">
 		insert into tbl_member(id, pw, name, email, phone, birthday, gender)
 		values(#{id},#{pw},#{name},#{email},#{phone},#{birthday},#{gender})
+	</insert>
+	
+	<insert id = "kakaoRegister">
+	insert into tbl_member(id, name, email, gender, img, api_token)
+		values(#{id},#{name},#{email},#{gender}, #{img}, #{api_token})
 	</insert>
 	
 	<update id="imgUpdate">
@@ -37,5 +47,9 @@
 	<update id="tmpDelete">
 		update tbl_member set auth = '탈퇴' where id  = #{id}
 	</update>
+	
+	<delete id="kakaoDelete">
+		delete from tbl_member where id = #{id} and api_token = 'K_Token'
+	</delete>
 	
 </mapper>

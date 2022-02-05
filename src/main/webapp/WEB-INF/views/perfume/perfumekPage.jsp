@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
     
-키워드검색 페이지    
+키워드검색 페이지
+<input type="button" value="메인으로 가기"  onclick="window.location = '/main/list'">    
 
 <style>
 #menu{
