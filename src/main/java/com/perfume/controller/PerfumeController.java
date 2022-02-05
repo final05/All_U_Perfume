@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.perfume.beans.Pagemaker;
@@ -38,26 +39,64 @@ public class PerfumeController {
 		Pagemaker pagemaker = new Pagemaker();
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(service.listCount());
-		
+		model.addAttribute("pa", pa);
 		model.addAttribute("pageMaker", pagemaker);
-		log.info("=====list====");
 		return "perfume/perfumePage";
 	}
 	
 	@RequestMapping("search")
-	public String search(Model model,PerfumeDTO dto, HttpServletRequest req, @RequestParam String c_gender) { 
+	public String search(Model model,PerfumeDTO dto, Paging pa, RedirectAttributes re, HttpServletRequest ht) { 
+		String choose = dto.getChoose();
+		String [] gender = dto.getC_gender();
+		String [] season = dto.getC_season();
+		if(choose != null && gender == null && season == null ) {
+			model.addAttribute("keyword",service.keyword(dto, pa));
+			Pagemaker pagemaker = new Pagemaker();
+			pagemaker.setPa(pa);
+			model.addAttribute("pageMaker",pagemaker);
+			pagemaker.setTotalCount(service.keyCount(dto));
+			model.addAttribute("pa", pa);
+			
+			re.addAttribute("page",pa.getPage());
+			re.addAttribute("perPageNum",pa.getPerPageNum());
+			re.addAttribute("keyword",dto.getKeyword());
+			
+			return "perfume/perfumekPage";
+		}
+		else{ 
+		model.addAttribute("cate",service.cate(dto,pa));		
+		Pagemaker pagemaker = new Pagemaker();
+		pagemaker.setPa(pa);
+		model.addAttribute("pageMaker",pagemaker);
+		pagemaker.setTotalCount(service.cateCount(dto));
+		model.addAttribute("pa", pa);
 		
-		String [] result = req.getParameterValues("c_gender");
-		model.addAttribute("cate",service.cate(dto));
-		log.warn(c_gender); 
-		 
-		return "perfume/perfumePagePro";
+		
+		re.addAttribute("page",pa.getPage());
+		re.addAttribute("perPageNum",pa.getPerPageNum());
+		re.addAttribute("gender",service.cate(dto, pa));
+		re.addAttribute("season",dto.getSeason());
+		
+		
+		return "perfume/perfumePagePro";}
 	}
 	
 	@RequestMapping("detail")
-	public String detail(Model model, PerfumeDTO perfume) {	
-	model.addAttribute("getDetail",service.getDetail(perfume));	
+	public String detail(Model model, PerfumeDTO perfume, Paging pa, RedirectAttributes re) {
 	
+	model.addAttribute("pa",pa);	
+	model.addAttribute("getDetail",service.getDetail(perfume));
+	
+	re.addAttribute("page",pa.getPage());
+	re.addAttribute("perPageNum",pa.getPerPageNum());
+	re.addAttribute("gender",perfume.getGender());
+	re.addAttribute("season",perfume.getSeason());
 		return "perfume/perfumeDetail";
+	}
+	
+	@RequestMapping("review")
+	public String review() {
+		
+		return "redirect:/perfume/perfumeDetail";
 	}
 }

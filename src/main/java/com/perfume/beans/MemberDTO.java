@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import lombok.Data;
 
 @Data
-public class MemberDTO {
+public class MemberDTO extends Pagemaker{
 	private String id;
 	private String pw;
 	private String name;

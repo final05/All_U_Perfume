@@ -17,7 +17,17 @@ public interface PerfumeService {
 	//페이징처리 포함한 리스트
 	public List<PerfumeDTO> listPage(Paging pa); 
 	
-	public List<PerfumeDTO> cate(PerfumeDTO perfume);
+	//성별, 계절 검색 
+	public List<PerfumeDTO> cate(PerfumeDTO perfume, Paging pa);
+	
+	//키워드 검색 
+	public List<PerfumeDTO> keyword(PerfumeDTO perfume,Paging pa);
+	
+	//성별, 계절 검색 후 게시물 갯수
+	public int cateCount(PerfumeDTO perfume);
+	
+	//키워드 검색 후 게시물 갯수
+	public int keyCount(PerfumeDTO perfume);
 	
 
 }

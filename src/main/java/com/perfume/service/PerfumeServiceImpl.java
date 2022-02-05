@@ -1,5 +1,7 @@
 package com.perfume.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +24,7 @@ public class PerfumeServiceImpl implements PerfumeService{
 	private PerfumeMapper mapper;
 
 	@Override
-	public List<PerfumeDTO> getDetail(PerfumeDTO perfume )  {
+	public List<PerfumeDTO> getDetail(PerfumeDTO perfume)  {
 		return mapper.getDetail(perfume);
 	}
 
@@ -38,10 +40,25 @@ public class PerfumeServiceImpl implements PerfumeService{
 	}
 
 	@Override
-	public List<PerfumeDTO> cate(PerfumeDTO perfume) {
-		
-		return mapper.cate(perfume);
+	public List<PerfumeDTO> cate(PerfumeDTO perfume, Paging pa) {
+		return mapper.cate(perfume.getC_gender(), perfume.getC_season(), pa.getRowStart(), pa.getRowEnd());
 	}
+
+	@Override
+	public List<PerfumeDTO> keyword(PerfumeDTO perfume, Paging pa) {
+		return mapper.keyword(perfume.getKeyword(), perfume.getChoose(), pa.getRowStart(), pa.getRowEnd());
+	}
+
+	@Override
+	public int cateCount(PerfumeDTO perfume) {
+		return mapper.cateCount(perfume.getC_gender(), perfume.getC_season());
+}
+
+	@Override
+	public int keyCount(PerfumeDTO perfume) {
+		return mapper.keyCount(perfume.getKeyword(), perfume.getChoose());
+	}
+	
 
 
 	

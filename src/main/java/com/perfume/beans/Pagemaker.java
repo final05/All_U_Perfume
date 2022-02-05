@@ -12,6 +12,7 @@ public class Pagemaker {
 	private boolean next; //다음
 	private int displayPageNum = 10; 
 	private Paging pa; //페이지정보 객체
+
 	
 	
 	public void setPa(Paging pa) {
@@ -77,5 +78,6 @@ public class Pagemaker {
 									.build();
 		return uriComponents.toUriString();
 	}
-
+	
+	
 }

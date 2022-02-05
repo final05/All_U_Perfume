@@ -2,11 +2,12 @@ package com.perfume.beans;
 
 public class Paging {
 	
-	private int page; //페이지
-	private int perPageNum; //페이지당 게시물 10 
+	private int page; //현재 페이지
+	private int perPageNum; //페이지당 게시물 
 	private int rowStart; // rownum 시작 번호
 	private int rowEnd; //rownum 끝 번호
 	
+	//현재 페이지 = 1 / 페이지당 = 10
 	public Paging() {
 		this.page = 1;
 		this.perPageNum = 10;

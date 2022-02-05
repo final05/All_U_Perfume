@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-
-<a href="/main/list">리스트</a>
-프로페이지</br>
+    
+키워드검색 페이지    
 
 <style>
 #menu{
@@ -43,7 +42,6 @@ dd {
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
 
 <h3>카테고리</h3> </br> 
 <div class="menu">
@@ -91,22 +89,6 @@ dd {
 </form>
 </div>
 
-
-<div id="perfumelist">
-
-<table border="1">
-<tr><td>게시글 번호 </td><td>향수이름</td></tr>
-<c:forEach items="${cate}" var="catee">
-	<tr><td><a href="/main/detail?p_number=${catee.p_number}&f_name=${catee.f_name}
-	&page=${pa.page}&perPageNum=${pa.perPageNum}&gender=${catee.gender}&season=${catee.season}">${catee.p_number}</a></td>
-	
-	<td><a href="/main/detail?p_number=${catee.p_number}&f_name=${catee.f_name}
-	&page=${pa.page}&gender=${catee.gender}&season=${catee.season}&perPageNum=${pa.perPageNum}">${catee.f_name}</a></td></tr>
-</c:forEach>
-</table>
-
-</div>
-
 <script>
 $('dt').on('click', function() {
 
@@ -134,9 +116,26 @@ $('dt').on('click', function() {
 		   
 	};
 	
-	
-	
 </script>
+
+
+
+<div id="perfumelist">
+<table border="1">
+<tr><td>게시글 번호 </td><td>향수이름</td></tr>
+<c:forEach items="${keyword}" var="k">
+
+<tr><td><a href="/main/detail?p_number=${k.p_number}&f_name=${k.f_name}
+	&page=${pa.page}&perPageNum=${pa.perPageNum}">${k.p_number}</a></td>
+
+<td><a href="/main/detail?p_number=${k.p_number}&f_name=${k.f_name}
+	&page=${pa.page}&perPageNum=${pa.perPageNum}">${k.f_name}</a></td></tr>
+
+</c:forEach>
+</table>
+</div>
+
+
 
 
 <div id="page">
@@ -155,14 +154,6 @@ $('dt').on('click', function() {
 	</ul>
 
 </div>
-
-
-	
-	
-	
-
-
-
 
 
 
