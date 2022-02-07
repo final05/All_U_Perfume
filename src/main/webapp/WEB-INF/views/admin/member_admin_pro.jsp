@@ -4,7 +4,7 @@
 	
 <c:if test="${result == 1}">
 	<script>
-		alert("글삭제 완료");
-		window.location="/perfume/recommendation/list";
+		alert("강제 탈퇴 완료");
+		window.location="/admin/main";
 	</script>
 </c:if>

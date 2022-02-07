@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>     
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
+    
+<h1> 향수 추천 게시판 </h1>
 
-<title>공지사항 게시판</title>
-<h1> 공지사항 게시판 </h1>
-
-	<form action="/perfume/notice/write" method="post">
+	<form action="/perfume/recommendation/write" method="post">
 		<input type = "submit" value = "글 쓰기" />
 	</form>
 	
@@ -22,12 +21,12 @@
 		<th> 작성일 </th>
 		<th> 조회수 </th>
 	</tr> 
-		<c:forEach items="${list}" var="boardDTO" > 
+		<c:forEach items="${listpage}" var="boardDTO" > 
 		<tr>
 		<td> <input name = "RowCheck" type = "checkbox" value="${boardDTO.b_number }" /></td>
 		<td> ${boardDTO.b_number} </td>
-		<td> <a href="/perfume/notice/noticeContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> </td>
-		<td> ${boardDTO.auth} </td>
+		<td> <a href="/perfume/recommendation/recommendationContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> </td>
+		<td> ${boardDTO.writer} </td>
 		<td> ${boardDTO.reg_date} </td>
 		<td> ${boardDTO.readcount} </td>
 	</tr>
@@ -50,4 +49,3 @@
 	</ul>
 
 </div>
-	

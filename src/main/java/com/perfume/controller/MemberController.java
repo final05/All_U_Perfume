@@ -35,6 +35,7 @@ public class MemberController {
 	
 	@RequestMapping("main")
 	public String main() {
+		// http://localhost:8080/member/main
 		return "member/main";
 	}
 		

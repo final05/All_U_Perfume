@@ -1,10 +1,16 @@
 package com.perfume.controller;
 
+import com.perfume.beans.AdminDTO;
 import com.perfume.beans.BoardDTO;
+import com.perfume.beans.Pagemaker;
+import com.perfume.beans.Paging;
 import com.perfume.controller.NoticeController;
 import com.perfume.service.NoticeBoardService;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,18 +35,18 @@ public class NoticeController {
 	@Setter(onMethod_=@Autowired)
 	private NoticeBoardService noticeservice;
 	
-	@RequestMapping("notice")
-	public String NoticeList(Model model) {
-		// http://localhost:8080/perfume/notice
-		log.info("게시판 목록 페이지 진입");
-		model.addAttribute("list", noticeservice.getList());
-		log.info("---------------dpfos;'fk'sdkf';skdfl;sf l;d-------");
-		return "board/notice/notice";		
-	}
+//	@RequestMapping("notice")
+//	public String NoticeList(Model model, Paging pa, HttpSession session, AdminDTO Adto) {
+//		// http://localhost:8080/perfume/notice
+//		log.info("게시판 목록 페이지 진입");
+//		model.addAttribute("list", noticeservice.getList());
+//		log.info("---------------dpfos;'fk'sdkf';skdfl;sf l;d-------");
+//		return "board/notice/notice";		
+//	}
 
 	// 공지 내용 보기 + 조뢰수 증가 + 페이징 처리
 	@RequestMapping("notice/noticeContent")
-	public String content(Model model, RedirectAttributes rttr, BoardDTO boardDTO, int b_number) {
+	public String content(Model model, RedirectAttributes rttr, BoardDTO boardDTO, int b_number, HttpSession session, AdminDTO Adto) {
 		log.info("============/borad/readcount?=b_number"+boardDTO.getB_number());
 		model.addAttribute("boardDTO", noticeservice.noticeContent(boardDTO));
 		noticeservice.readcount(b_number);
@@ -49,7 +55,7 @@ public class NoticeController {
 	
 	// 공지 글 작성 Form
 	@RequestMapping("notice/write")
-	public String writeForm(Model model, BoardDTO boardDTO) {
+	public String writeForm(Model model, BoardDTO boardDTO, HttpSession session, AdminDTO Adto) {
 		log.info("============/borad/write");
 		log.info("boardDTO =" + boardDTO);
 		return "board/notice/write";
@@ -57,7 +63,7 @@ public class NoticeController {
 		
 	// 공지 글 작성 Pro
 	@RequestMapping("notice/writePro") 
-	public String writePro(Model model, BoardDTO boardDTO) {
+	public String writePro(Model model, BoardDTO boardDTO,HttpSession session, AdminDTO Adto) {
 		log.info("============/borad/writePro");
 		model.addAttribute("result", noticeservice.noticeinsert(boardDTO));
 		return "board/notice/writePro";	
@@ -66,14 +72,14 @@ public class NoticeController {
 	// 공지 글 수정 Form
 	
 	@RequestMapping("notice/update")
-	public String updateForm(Model model, BoardDTO boardDTO) {
+	public String updateForm(Model model, BoardDTO boardDTO, HttpSession session, AdminDTO Adto) {
 		log.info("==============board/notice/updateForm=="+boardDTO.getB_number());
 		return "board/notice/update";
 	}
 	
 	// 공지 글 수정 Pro
 	@RequestMapping("notice/updatePro")
-	public String updatePro(Model model, BoardDTO boardDTO) {
+	public String updatePro(Model model, BoardDTO boardDTO, HttpSession session, AdminDTO Adto) {
 		log.info("==============board/notice/updatePro"+boardDTO.getB_number());
 		model.addAttribute("result", noticeservice.noticeupdate(boardDTO));
 		return "board/notice/updatePro";
@@ -81,18 +87,43 @@ public class NoticeController {
 	
 	// 공지 글 삭제
 	@RequestMapping("notice/delete") 
-	public String delete(Model model, BoardDTO boardDTO) {
+	public String delete(Model model, BoardDTO boardDTO, HttpSession session, AdminDTO Adto) {
 		log.info("==============board/notice/updatePro"+boardDTO.getB_number());
 		return "board/notice/delete";
 	}
 	
 	// 공지 글 삭제
 	@RequestMapping("notice/deletePro") 
-	public String deletePro(Model model, int b_number) {
+	public String deletePro(Model model, String b_number, HttpSession session, AdminDTO Adto) {
 		// log.info("==============board/notice/updatePro"+boardDTO.getB_number());
 		model.addAttribute("result", noticeservice.noticedelete(b_number));
 		return "board/notice/deletePro";
 	}
+	
+	// 페이징 처리
+	@RequestMapping("notice/list")
+	public String list(Model model, Paging pa, BoardDTO boardDTO, HttpSession session, AdminDTO Adto) {
+		model.addAttribute("list",noticeservice.selectNoticeBoard(pa));
+		Pagemaker pagemaker = new Pagemaker(); // 객체생성
+		pagemaker.setPa(pa);
+		pagemaker.setTotalCount(noticeservice.countNoticeBoard());
+		model.addAttribute("pageMaker", pagemaker);
+		return "board/notice/noticeBoardPage";
+	}
+	
+	// 게시글 선택 삭제
+	@RequestMapping("notice/delete_2")
+	public String noticedelete_2(HttpServletRequest request, String b_number) {
+		// http://localhost:8080/perfume/notice/delete_2
+		log.info("동작은 하느냐 ===================" + b_number);
+		String[] ajaxMsg = request.getParameterValues("valueArr");
+		int size = ajaxMsg.length;
+		for (int i=0; i<size; i++) {
+			noticeservice.noticedelete(ajaxMsg[i]);
+		}
+		return "redirect:listpage";
+	}
+	
 	
 	
 }

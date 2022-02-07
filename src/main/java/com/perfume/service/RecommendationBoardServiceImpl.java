@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.perfume.beans.BoardDTO;
+import com.perfume.beans.Paging;
 import com.perfume.mybatis.NoticeBoardMapper;
 import com.perfume.mybatis.RecommendationBoardMapper;
 
@@ -52,5 +53,18 @@ public class RecommendationBoardServiceImpl implements RecommendationBoardServic
 		// TODO Auto-generated method stub
 		return recommendationmapper.readcount(b_number);
 	}
+
+	@Override
+	public int countRecommendationBoard() {
+		// TODO Auto-generated method stub
+		return recommendationmapper.countRecommendationBoard();
+	}
+
+	@Override
+	public List<BoardDTO> selectRecommendationBoard(Paging pa) {
+		// TODO Auto-generated method stub
+		return recommendationmapper.selectRecommendationBoard(pa);
+	}
+
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.perfume.beans.BoardDTO;
+import com.perfume.beans.Paging;
 import com.perfume.mybatis.NoticeBoardMapper;
 
 import lombok.Setter;
@@ -36,7 +37,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 	}
 
 	@Override
-	public int noticedelete(int b_number) {
+	public int noticedelete(String b_number) {
 		// TODO Auto-generated method stub
 		return noticemapeer.noticedelete(b_number);
 	}
@@ -51,6 +52,22 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 	public int readcount(int b_number) {
 		// TODO Auto-generated method stub
 		return noticemapeer.readcount(b_number);
+	}
+
+	@Override
+	public int countNoticeBoard() {
+		return noticemapeer.countNoticeBoard();
+	}
+
+	@Override
+	public List<BoardDTO> selectNoticeBoard(Paging pa) {
+		return noticemapeer.selectNoticeBoard(pa);
+	}
+
+	@Override
+	public List<BoardDTO> cate(BoardDTO board) {
+		// TODO Auto-generated method stub
+		return noticemapeer.cate(board);
 	}
 
 }
