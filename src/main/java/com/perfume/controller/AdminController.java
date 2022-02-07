@@ -45,7 +45,8 @@ public class AdminController {
 	
 	// 관리자 로그인
 	@RequestMapping("login")
-	public String login() {
+	public String login(AdminDTO Adto, HttpSession session) {
+		session.setAttribute("aid", Adto.getAid());
 		return "admin/login";
 	}
 
@@ -54,6 +55,7 @@ public class AdminController {
 	public String loginPro(AdminDTO Adto, HttpSession session) {
 		if(service.adminAdminLoginCheck(Adto)==1) {
 			session.setAttribute("aid", Adto.getAid());
+			log.info("로그인 pro 세션 확인 ::::::::: " + Adto.getAid());
 		}
 		return "admin/loginPro";
 	}
@@ -62,14 +64,16 @@ public class AdminController {
 	@RequestMapping("member_admin")
 	public String memeber_view(Model model, HttpSession session, MemberDTO memberdto, AdminDTO Adto) {
 		// http://localhost:8080/admin/member_delete
-		session.setAttribute("aid", Adto.getAid());
+		// session.getAttribute("aid");
+		log.info("aid세션 확인" + Adto.getAid());
 		return "admin/member_admin";
 	}
 	
+	// 관리자 회원 강제 탈퇴 pro 세션 넘기기
 	@RequestMapping("member_admin_pro")
 	public String memeber_delete_pro(Model model, MemberDTO memberdto, HttpSession session, AdminDTO Adto) {
 		log.info("강탈 시킬 아이디 ==== " + memberdto.getId());
-		session.setAttribute("aid", Adto.getAid());
+		session.getAttribute("aid");
 		model.addAttribute("result", service.member_delete(memberdto));
 		return "admin/member_admin_pro";
 	}
@@ -84,7 +88,7 @@ public class AdminController {
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(service.countNoticeBoard());
 		model.addAttribute("pageMaker", pagemaker);
-		log.info("=====================list======"+boardDTO.getAuth());
+		log.info("리스트 aid세션 확인" + Adto.getAid());
 		return "admin/notice_admin";
 	}
 	
