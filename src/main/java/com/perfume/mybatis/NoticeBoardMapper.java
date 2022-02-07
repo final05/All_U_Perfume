@@ -20,7 +20,7 @@ public interface NoticeBoardMapper {
 	
 	public BoardDTO noticeContent(BoardDTO board);
 	
-	public int noticedelete(int b_number);
+	public int noticedelete(String b_number);
 	
 	public int noticeupdate(BoardDTO board);
 	

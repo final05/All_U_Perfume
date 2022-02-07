@@ -18,8 +18,15 @@
 </c:if>
 
 <c:if test="${sessionScope.aid != null}">
-		관리자님, 환영합니다!
-		<input type="button" value="테스트">
+		관리자님, 환영합니다! <br/>
+		<form action="member_admin" method ="post">
+			<input type = "submit" value = "회원 강제 탈퇴" />
+		</form>
+		
+		<form action ="notice_admin" method ="post">
+			<input type = "submit" value = "공지 게시판 관리" />
+		</form>
+
 </c:if>
 
 </body>

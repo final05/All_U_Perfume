@@ -9,7 +9,8 @@
 </head>
 
 <body>
-	<c:if test="${sessionScope.aid == null}">
+
+<c:if test="${sessionScope.aid == null}">
 	<script>
 		alert("id/pw를 확인하세요");
 		history.go(-1);

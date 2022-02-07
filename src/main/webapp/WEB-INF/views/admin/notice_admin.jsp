@@ -29,7 +29,7 @@
 			});
 		});
 		function deleteValue(){
-			var url = "delete_2"; // controller 로 보내고자 하는 url
+			var url = "delete"; // controller 로 보내고자 하는 url
 			var valueArr = new Array();
 			var list = $("input[name='RowCheck']");
 			for (var i = 0; i < list.length; i++) {

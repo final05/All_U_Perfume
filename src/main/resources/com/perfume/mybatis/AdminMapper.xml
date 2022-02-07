@@ -9,6 +9,30 @@
 		select count(*) from tbl_admin where aid =#{aid} and pw = #{pw} and auth = '관리자'
 	</select>
 	
+	<!-- 회원 강제 탈퇴 mapper -->
+	<delete id = "member_delete"  >
+		delete from tbl_member
+			where id = #{id}
+	</delete>
 	
+		<!-- 게시글 조회수 증가 -->
+	<update id="readcount">
+		update tbl_board set readcount = readcount + 1 where b_number = #{b_number}
+	</update>
+	
+	<!-- 총 게시글 갯수 출력 -->
+	<select id = "countNoticeBoard" resultType ="int" >
+		select count (*) from tbl_board where boardnum = 3
+	</select>
+	
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id ="selectNoticeBoard" resultType="com.perfume.beans.BoardDTO" parameterType="com.perfume.beans.Paging" >
+		<![CDATA[
+			select rm, b_number, subject, content, auth, reg_date, readcount from 
+				(select rownum rm, b_number, subject, content, auth, reg_date, readcount from
+					(select * from tbl_board where boardnum = 3 order by b_number desc) 
+						order by b_number desc) where rm between #{rowStart} and #{rowEnd}
+		]]>
+	</select>
 	
 </mapper>

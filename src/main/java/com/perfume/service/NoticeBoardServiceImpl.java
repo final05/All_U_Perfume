@@ -37,7 +37,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 	}
 
 	@Override
-	public int noticedelete(int b_number) {
+	public int noticedelete(String b_number) {
 		// TODO Auto-generated method stub
 		return noticemapeer.noticedelete(b_number);
 	}

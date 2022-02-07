@@ -15,6 +15,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.perfume.beans.FileInfo;
+import com.perfume.beans.PerfumeDTO;
+import com.perfume.beans.NoteDTO;
+import com.perfume.service.PerfumeService;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import com.perfume.beans.FileInfo;
@@ -33,6 +44,8 @@ public class SurveyController {
 	
 	@Autowired
 	private SurveyService service;
+	@Autowired
+	private PerfumeService service2;
 	
 	@RequestMapping("surveyStart")
 	public String surveyStart(){
@@ -58,7 +71,6 @@ public class SurveyController {
 		
 		List<PerfumeDTO> perfumeList = service.SurveyAccNoteResult(accList);
 		model.addAttribute("Tnote",perfumeList);
-		
 		return "survey/accResult";
 	}
 	
