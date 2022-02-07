@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Data;
@@ -113,7 +114,7 @@ public class NoticeController {
 	
 	// 게시글 선택 삭제
 	@RequestMapping("notice/delete_2")
-	public String noticedelete_2(HttpServletRequest request, String b_number) {
+	public @ResponseBody String noticedelete_2(HttpServletRequest request, String b_number) {
 		// http://localhost:8080/perfume/notice/delete_2
 		log.info("동작은 하느냐 ===================" + b_number);
 		String[] ajaxMsg = request.getParameterValues("valueArr");
@@ -121,7 +122,7 @@ public class NoticeController {
 		for (int i=0; i<size; i++) {
 			noticeservice.noticedelete(ajaxMsg[i]);
 		}
-		return "redirect:listpage";
+		return "1";
 	}
 	
 	
