@@ -29,7 +29,7 @@
 			});
 		});
 		function deleteValue(){
-			var url = "delete"; // controller 로 보내고자 하는 url
+			var url = "/admin/notice_admin_delete"; // controller 로 보내고자 하는 url
 			var valueArr = new Array();
 			var list = $("input[name='RowCheck']");
 			for (var i = 0; i < list.length; i++) {
@@ -43,15 +43,15 @@
 				var chk = confirm ("정말 삭제하시겠습니까?");
 				$.ajax({
 					url : url, // 전송 url
-					traditional : true,
+					traditional : true, // 배열갑 java로 전송하기
 					data : {
 						valueArr : valueArr // 보내고자 하는 data 변수 설정
 					},
 					success: function(jdata) {
 						console.log(jdata);
-						if(jdata = 1) {
+						if(jdata == 1) {
 							alert("삭제 성공");
-							location.replace("list") // 리스트 페이지 샤로고침
+							location.replace("notice_admin") // 리스트 페이지 샤로고침
 						}
 						else {
 							alert("삭제 실패");
@@ -63,7 +63,7 @@
 	</script>
 	
 
-<!--  
+  
 <c:if test ="${sessionScope.aid != null}" >
 
 	<form action="/perfume/notice/write" method="post">
@@ -71,7 +71,7 @@
 	</form>	
 	
 </c:if>
--->
+
 	<form action="/perfume/notice/write" method="post">
 		<input type = "submit" value = "글 쓰기" />
 	</form>	

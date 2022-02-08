@@ -30,10 +30,12 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 @Log4j
-@RequestMapping("/admin/")
+@RequestMapping("admin")
 public class AdminController {
 	@Autowired
 	private AdminService service;
+	@Autowired
+	private NoticeBoardService noticeservice;
 
 	
 	// 관리자 메인
@@ -65,7 +67,7 @@ public class AdminController {
 	public String memeber_view(Model model, HttpSession session, MemberDTO memberdto, AdminDTO Adto) {
 		// http://localhost:8080/admin/member_delete
 		// session.getAttribute("aid");
-		log.info("aid세션 확인" + Adto.getAid());
+		log.info("강제 탈퇴 jsp aid세션 확인" + session.getAttribute("aid"));
 		return "admin/member_admin";
 	}
 	
@@ -73,23 +75,41 @@ public class AdminController {
 	@RequestMapping("member_admin_pro")
 	public String memeber_delete_pro(Model model, MemberDTO memberdto, HttpSession session, AdminDTO Adto) {
 		log.info("강탈 시킬 아이디 ==== " + memberdto.getId());
-		session.getAttribute("aid");
+		log.info("강제 탈퇴 jsp aid세션 확인" + session.getAttribute("aid"));
+		// session.getAttribute("aid");
 		model.addAttribute("result", service.member_delete(memberdto));
 		return "admin/member_admin_pro";
 	}
+	
 	
 	// 페이징 처리
 	@RequestMapping("notice_admin")
 	public String list(Model model, Paging pa, BoardDTO boardDTO,HttpSession session, AdminDTO Adto) {
 		log.info("==========notice admin======" + boardDTO.getSubject());
-		session.setAttribute("aid", Adto.getAid());
-		model.addAttribute("listpage",service.selectNoticeBoard(pa));
+		log.info("list jsp aid세션 확인" + session.getAttribute("aid"));
+		model.addAttribute("list",service.selectNoticeBoard(pa));
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(service.countNoticeBoard());
 		model.addAttribute("pageMaker", pagemaker);
 		log.info("리스트 aid세션 확인" + Adto.getAid());
 		return "admin/notice_admin";
+	}
+	
+	// 게시글 선택 삭제
+	@RequestMapping("notice_admin_delete")
+	public @ResponseBody String noticedelete_2(HttpServletRequest request) {
+		// http://localhost:8080/admin/notice_admin_delete
+		// log.info("동작은 하느냐 ===================" + b_number);
+		log.info("서비스 확인======="+noticeservice);
+		String[] ajaxMsg = request.getParameterValues("valueArr");
+		log.info("체크 확인=="+ajaxMsg);
+		log.info("체크 확인=="+ajaxMsg.length);
+		int size = ajaxMsg.length;
+		for (int i=0; i<size; i++) {
+			noticeservice.noticedelete(ajaxMsg[i]);
+		}
+		return "1";
 	}
 	
 
