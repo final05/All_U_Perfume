@@ -23,6 +23,7 @@ import com.perfume.beans.AdminDTO;
 import com.perfume.beans.BoardDTO;
 import com.perfume.service.AdminService;
 import com.perfume.service.NoticeBoardService;
+import com.perfume.service.RecommendationBoardService;
 
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,8 @@ public class AdminController {
 	private AdminService service;
 	@Autowired
 	private NoticeBoardService noticeservice;
+	@Autowired
+	private RecommendationBoardService recommendationservice;
 
 	
 	// 관리자 메인
@@ -82,29 +85,39 @@ public class AdminController {
 	}
 	
 	
-	// 페이징 처리
+	// 공지 페이지 페이징 처리
 	@RequestMapping("notice_admin")
-	public String list(Model model, Paging pa, BoardDTO boardDTO,HttpSession session, AdminDTO Adto) {
-		log.info("==========notice admin======" + boardDTO.getSubject());
-		log.info("list jsp aid세션 확인" + session.getAttribute("aid"));
-		model.addAttribute("list",service.selectNoticeBoard(pa));
+	public String notice_list(Model model, Paging pa, BoardDTO boardDTO,HttpSession session, AdminDTO Adto) {
+		// log.info("==========notice admin======" + boardDTO.getSubject());
+		// log.info("list jsp aid세션 확인" + session.getAttribute("aid"));
+		model.addAttribute("notice_list",noticeservice.selectNoticeBoard(pa));
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(service.countNoticeBoard());
 		model.addAttribute("pageMaker", pagemaker);
-		log.info("리스트 aid세션 확인" + Adto.getAid());
+		// log.info("리스트 aid세션 확인" + Adto.getAid());
 		return "admin/notice_admin";
+	}
+	
+	// 향수 추천 페이지 페이징 처리
+	@RequestMapping("recommendation_admin")
+	public String list(Model model, Paging pa, BoardDTO boardDTO) {
+		model.addAttribute("recommendation_list",recommendationservice.selectRecommendationBoard(pa));
+		Pagemaker pagemaker = new Pagemaker(); // 객체생성
+		pagemaker.setPa(pa);
+		pagemaker.setTotalCount(recommendationservice.countRecommendationBoard());
+		model.addAttribute("pageMaker", pagemaker);
+		return "admin/recommendation_admin";
 	}
 	
 	// 게시글 선택 삭제
 	@RequestMapping("notice_admin_delete")
 	public @ResponseBody String noticedelete_2(HttpServletRequest request) {
 		// http://localhost:8080/admin/notice_admin_delete
-		// log.info("동작은 하느냐 ===================" + b_number);
-		log.info("서비스 확인======="+noticeservice);
+		// log.info("서비스 확인======="+noticeservice);
 		String[] ajaxMsg = request.getParameterValues("valueArr");
-		log.info("체크 확인=="+ajaxMsg);
-		log.info("체크 확인=="+ajaxMsg.length);
+		// log.info("체크 확인=="+ajaxMsg);
+		// log.info("체크 확인=="+ajaxMsg.length);
 		int size = ajaxMsg.length;
 		for (int i=0; i<size; i++) {
 			noticeservice.noticedelete(ajaxMsg[i]);

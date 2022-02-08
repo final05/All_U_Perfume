@@ -26,6 +26,10 @@
 		<form action ="notice_admin" method ="post">
 			<input type = "submit" value = "공지 게시판 관리" />
 		</form>
+		
+		<form action = "recommendation_admin" method= "post">
+			<input type = "submit" value = "향수추천 게시판 관리" />
+		</form>
 
 </c:if>
 

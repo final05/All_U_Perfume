@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
-<title>공지사항 게시판</title>
-<h1> 공지사항 게시판 </h1>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
+    
+<h1> 향수 추천 게시판 </h1>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type = "text/javascript">
@@ -31,10 +29,10 @@
 		function deleteValue(){
 			var url = "/admin/notice_admin_delete"; // controller 로 보내고자 하는 url
 			var valueArr = new Array();
-			var notice_list = $("input[name='RowCheck']");
-			for (var i = 0; i < notice_list.length; i++) {
-				if(notice_list[i].checked){ // 선택되어 있으면 배열에 값을 저장함 
-					valueArr.push(notice_list[i].value);
+			var recommendation_list = $("input[name='RowCheck']");
+			for (var i = 0; i < recommendation_list.length; i++) {
+				if(recommendation_list[i].checked){ // 선택되어 있으면 배열에 값을 저장함 
+					valueArr.push(recommendation_list[i].value);
 				}
 			}
 			if (valueArr.length == 0) { // 선택된 값이 0이면 = 배열에 저장된 값이 없으면
@@ -62,38 +60,34 @@
 		}
 	</script>
 	
-
-  
-<c:if test ="${sessionScope.aid != null}" >
-
-	<form action="/perfume/notice/write" method="post">
+<c:if test = "${sessionSope.aid != null }">
+	<form action="/perfume/recommendation/write" method="post">
 		<input type = "submit" value = "글 쓰기" />
-	</form>	
-
-	<input type ="button" value = "선택삭제" onclick = "deleteValue();" >
+	</form>
+	
+	<input type = "button" value = "선택삭제" onclick="deleteValue();">
 </c:if>
 
 <table border = "1" >
 	<tr>
-		<th> <input id = "allCheck" type = "checkbox" name = "allCheck"/> </th>
+		<th> 선택 </th>
 		<th> 글번호 </th>
 		<th> 글제목 </th>
 		<th> 작성자 </th>
 		<th> 작성일 </th>
 		<th> 조회수 </th>
 	</tr> 
-		<c:forEach items="${notice_list}" var="boardDTO" > 
+		<c:forEach items="${recommendation_list}" var="boardDTO" > 
 		<tr>
-		<td> <input name = "RowCheck" type = "checkbox" value="${boardDTO.b_number}"/></td>
+		<td> <input name = "RowCheck" type = "checkbox" value="${boardDTO.b_number }" /></td>
 		<td> ${boardDTO.b_number} </td>
-		<td> <a href="/perfume/notice/noticeContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> </td>
-		<td> ${boardDTO.auth} </td>
+		<td> <a href="/perfume/recommendation/recommendationContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> </td>
+		<td> ${boardDTO.writer} </td>
 		<td> ${boardDTO.reg_date} </td>
 		<td> ${boardDTO.readcount} </td>
 	</tr>
 	</c:forEach>
 </table>
-
 
 <div id="page">
 	<ul>
@@ -106,7 +100,7 @@
 		</c:forEach>
 		
 		<c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
-			<a href="notice_admin${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
+			<a href="recommendation_admin${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
 		</c:if>
 	</ul>
 
