@@ -59,25 +59,22 @@
 			}
 		}
 	</script>
+	sfsdfsdfsdfsdfsd
+	${sessionSope.id }
 	
-<c:if test = "${sessionSope.aid != null }">
-	<form action="/perfume/recommendation/write" method="post">
-		<input type = "submit" value = "글 쓰기" />
-	</form>
-	<input type = "button" value = "선택삭제" onclick="deleteValue();">
+	<c:if test = "${sessionSope.aid != null }">
+    <form action="/perfume/recommendation/write" method="post">
+        <input type = "submit" value = "글 쓰기" />
+    </form>
+    <input type = "button" value = "선택삭제" onclick="deleteValue();">
 </c:if>
 
-<c:if test = "${sessionSope.aid != null }">
-	<form action="/perfume/recommendation/write" method="post">
-		<input type = "submit" value = "글 쓰기" />
-	</form>
+<c:if test = "${sessionSope.id != null }">
+    <form action="/perfume/recommendation/write" method="post">
+        <input type = "submit" value = "글 쓰기" />
+    </form>
 </c:if>
 
-<c:if test = "${sessionSope.aid != null }">
-	<form action="/perfume/recommendation/write" method="post">
-		<input type = "submit" value = "글 쓰기" />
-	</form>
-</c:if>
 
 
 <table border = "1" >
@@ -101,6 +98,21 @@
 	</c:forEach>
 </table>
 
+	<form action = "/perfume/recommendation/list" method = "post">
+		<div id ="search">
+			<button type = "submit"> 검색 </button>
+			<input type = "text" name = "searchName">
+			<select class = "search-select" name = "searchType">
+				<option value = "subject"> 제목 </option>
+				<option value = "contetn"> 내용 </option>
+				<option value = "writer"> 작성자 </option>
+				<option value = "titcont"> 제목 + 내용 </option>
+			</select>
+		</div>
+		<input type = "hidden" name = "pageNum" value = "1">
+		<input type = "hidden" name = "amount" value = "10">
+	</form>
+	
 <div id="page">
 	<ul>
 		<c:if test="${pageMaker.prev}">

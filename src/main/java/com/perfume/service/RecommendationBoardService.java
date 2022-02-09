@@ -17,5 +17,8 @@ public interface RecommendationBoardService {
 	
 	// 페이징 처리 게시글 조회
 	public List<BoardDTO> selectRecommendationBoard(Paging pa);
+	
+	// 검색
+	public int recommendation_serach(BoardDTO board);
 
 }

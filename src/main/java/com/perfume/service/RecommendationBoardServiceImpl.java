@@ -66,5 +66,13 @@ public class RecommendationBoardServiceImpl implements RecommendationBoardServic
 		return recommendationmapper.selectRecommendationBoard(pa);
 	}
 
+	@Override
+	public int recommendation_serach(BoardDTO board) {
+		// TODO Auto-generated method stub
+		return recommendationmapper.recommendaion_search(board);
+	}
+
+
+
 
 }

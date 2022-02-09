@@ -95,7 +95,6 @@ public class AdminController {
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(service.countNoticeBoard());
 		model.addAttribute("pageMaker", pagemaker);
-		// log.info("리스트 aid세션 확인" + Adto.getAid());
 		return "admin/notice_admin";
 	}
 	

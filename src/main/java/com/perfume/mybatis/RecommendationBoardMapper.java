@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.perfume.beans.BoardDTO;
 import com.perfume.beans.Paging;
+import com.perfume.beans.SearchCriteria;
 
 public interface RecommendationBoardMapper {
 	public List<BoardDTO> getrecommendationList(); // 게시판 글 목록 리턴할 메서드
@@ -17,4 +18,10 @@ public interface RecommendationBoardMapper {
 	
 	// 페이징 처리 게시글 조회
 	public List<BoardDTO> selectRecommendationBoard(Paging pa);
+	
+	// 페이징 처리 , 게시글 조회
+	public List<BoardDTO> recommendationList(SearchCriteria scri);
+	
+	// 게시글 총 갯수
+	
 }

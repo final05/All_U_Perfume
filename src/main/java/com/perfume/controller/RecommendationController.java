@@ -1,6 +1,7 @@
 package com.perfume.controller;
 
 
+import com.perfume.beans.AdminDTO;
 import com.perfume.beans.BoardDTO;
 import com.perfume.beans.MemberDTO;
 import com.perfume.beans.Pagemaker;
@@ -98,17 +99,25 @@ public class RecommendationController {
 	// 페이징 처리
 	
 	@RequestMapping("recommendation/list")
-	public String list(Model model, Paging pa, BoardDTO boardDTO, MemberDTO memberDTO, HttpSession session) {
+	public String recommendation_list(Model model, Paging pa, BoardDTO boardDTO, MemberDTO memberDTO, HttpSession session, AdminDTO adminDTO) {
 		model.addAttribute("recommendation_list",recommendationservice.selectRecommendationBoard(pa));
 		session.setAttribute("id", memberDTO.getId());
-		session.setAttribute("kid", memberDTO.getId());
-		session.setAttribute("aid", memberDTO.getId());
-		// log.info(session)
+		session.setAttribute("aid", adminDTO.getAid());
+		String id = (String)session.getAttribute("id");
+		// String kid = (String)session.getAttribute("kid");
+		session.getAttribute("id");
+		log.info("향수 추천 jsp id세션 확인 =============== " + session.getAttribute("id"));
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(recommendationservice.countRecommendationBoard());
 		model.addAttribute("pageMaker", pagemaker);
 		return "board/recommendation/recommendationBoardPage";
 	}
+	
+	// 검색
+//	@RequestMapping("recommendation/list")
+//	public String recommendation_search(Model model, BoardDTO boardDTO) {
+//		return "board/recommendation/recommendationBoardPage";
+//	}
 
 }

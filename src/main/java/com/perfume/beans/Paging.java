@@ -6,7 +6,7 @@ public class Paging {
 	private int perPageNum; //페이지당 게시물 
 	private int rowStart; // rownum 시작 번호
 	private int rowEnd; //rownum 끝 번호
-	
+
 	//현재 페이지 = 1 / 페이지당 = 10
 	public Paging() {
 		this.page = 1;

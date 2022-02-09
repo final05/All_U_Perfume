@@ -107,13 +107,14 @@ public class NoticeController {
 	public String list(Model model, Paging pa, BoardDTO boardDTO, HttpSession session, AdminDTO Adto, MemberDTO memberDTO) {
 		model.addAttribute("notice_list",noticeservice.selectNoticeBoard(pa));
 		// int countNoticeBoard = noticeservice.countNoticeBoard();
+		log.info("로그찍히는지실험");
 		session.setAttribute("id", memberDTO.getId());
 		session.setAttribute("kid", memberDTO.getId());
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(noticeservice.countNoticeBoard());
 		model.addAttribute("pageMaker", pagemaker);
-		return "board/notice/noticeBoardPage";
+		return "board/notice/noticeBoardPage"; 
 	}
 	
 	// 게시글 선택 삭제
