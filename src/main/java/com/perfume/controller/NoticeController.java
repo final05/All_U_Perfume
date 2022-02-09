@@ -105,6 +105,7 @@ public class NoticeController {
 	@RequestMapping("notice/list")
 	public String list(Model model, Paging pa, BoardDTO boardDTO, HttpSession session, AdminDTO Adto) {
 		model.addAttribute("list",noticeservice.selectNoticeBoard(pa));
+		int countNoticeBoard = noticeservice.countNoticeBoard();
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(noticeservice.countNoticeBoard());
@@ -125,6 +126,9 @@ public class NoticeController {
 		return "1";
 	}
 	
-	
-	
+	// 검색
+//	@RequestMapping("notice/list")
+//	public String search() {
+//		return "board/notice/noticeBoardPage";
+//	}
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.perfume.beans.BoardDTO;
 import com.perfume.beans.Paging;
+import com.perfume.beans.RE_BoardDTO;
 import com.perfume.mybatis.Q_ABoardMapper;
 
 import lombok.Setter;
@@ -57,6 +58,12 @@ public class Q_ABoardServiceImpl implements Q_ABoardService {
 	public List<BoardDTO> selectQ_ABoard(Paging pa) {
 		// TODO Auto-generated method stub
 		return qamapper.selectQ_ABoard(pa);
+	}
+
+	@Override
+	public int q_a_re_insert(RE_BoardDTO reboard) {
+		// TODO Auto-generated method stub
+		return qamapper.q_a_re_insert(reboard);
 	}
 
 }

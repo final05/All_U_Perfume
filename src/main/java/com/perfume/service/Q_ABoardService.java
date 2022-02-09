@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.perfume.beans.BoardDTO;
 import com.perfume.beans.Paging;
+import com.perfume.beans.RE_BoardDTO;
 
 public interface Q_ABoardService {
 	public int q_ainsert(BoardDTO board); // 게시글 작성
@@ -16,6 +17,9 @@ public interface Q_ABoardService {
 	
 	// 페이징 처리 게시글 조회
 	public List<BoardDTO> selectQ_ABoard(Paging pa);
+	
+	// 답글 작성하기
+	public int q_a_re_insert(RE_BoardDTO reboard);
 	
 
 }

@@ -4,6 +4,7 @@ package com.perfume.controller;
 import com.perfume.beans.BoardDTO;
 import com.perfume.beans.Pagemaker;
 import com.perfume.beans.Paging;
+import com.perfume.beans.RE_BoardDTO;
 import com.perfume.controller.NoticeController;
 import com.perfume.service.NoticeBoardService;
 import com.perfume.service.Q_ABoardService;
@@ -11,6 +12,10 @@ import com.perfume.service.RecommendationBoardService;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -85,7 +90,6 @@ public class Q_AController {
 	}
 	
 	// Q_A 처리
-	
 	@RequestMapping("q_a/list")
 	public String list(Model model, Paging pa, BoardDTO boardDTO) {
 		model.addAttribute("q_a_list",q_aservice.selectQ_ABoard(pa));
@@ -95,5 +99,15 @@ public class Q_AController {
 		model.addAttribute("pageMaker", pagemaker);
 		return "board/q_a/q_aBoardPage";
 	}
-
+	
+	// Q_A 게시판 게시글 답변
+	@RequestMapping("q_a/boardReply")
+	public String boardReply(HttpServletRequest request, HttpServletResponse response) {
+		return "board/q_a/ReBoardWriteForm";
+	}
+	
+	@RequestMapping("q_a/insertBoardReply")
+	public String insertBoardReply (HttpServletRequest request, HttpServletResponse response, RE_BoardDTO reboardDTO) {
+		return "board/q_a/ReBoardWritePro";
+	}
 }

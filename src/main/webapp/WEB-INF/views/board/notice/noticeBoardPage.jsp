@@ -95,6 +95,33 @@
 </table>
 
 
+// 컨트롤러의 list.do로 맵핑되고, user_id, title, content값을 매개값으로 넘긴다.
+// 검색옵션은 작성자, 제목, 내용, 작성자+제목+내용으로 검색할 수 있도록 한다.
+
+<form  action="board/notice/noticeBoardPage" method="post" name="form1" >
+
+    <select name="search_option">
+        <option value="user_id"
+<c:if test="${map.search_option == 'writer'}">selected</c:if>
+   >작성자</option>
+
+        <option value="title" 
+<c:if test="${map.search_option == 'subject'}">selected</c:if>
+        >제목</option>
+
+        <option value="content" 
+<c:if test="${map.search_option == 'content'}">selected</c:if>
+        >내용</option>
+
+        <option value="all" 
+<c:if test="${map.search_option == 'all'}">selected</c:if>
+        >작성자+내용+제목</option>
+    </select>
+    <input name="keyword" value="${map.keyword}">
+    <input type="submit" value="검색">
+</form>
+
+
 <div id="page">
 	<ul>
 		<c:if test="${pageMaker.prev}">
@@ -109,5 +136,6 @@
 			<a href="notice_admin${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
 		</c:if>
 	</ul>
-
 </div>
+
+	

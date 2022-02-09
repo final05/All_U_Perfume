@@ -32,6 +32,6 @@ public interface NoticeBoardMapper {
 	// 페이징 처리 게시글 조회
 	public List<BoardDTO> selectNoticeBoard(Paging pa);
 	
-	public List<BoardDTO> cate(BoardDTO board);
+
 	
 }

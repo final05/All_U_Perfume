@@ -6,6 +6,7 @@ public class Paging {
 	private int perPageNum; //페이지당 게시물 10 
 	private int rowStart; // rownum 시작 번호
 	private int rowEnd; //rownum 끝 번호
+	// private String keyword; // 검색 키워드
 	
 	public Paging() {
 		this.page = 1;
@@ -51,9 +52,18 @@ public class Paging {
 		return rowEnd;
 	}
 	
+//	public void setKeyword(String keyword) {
+//		this.keyword = keyword;
+//	}
+//	
+//	public String getKeyword() {
+//		return keyword;
+//	}
+//	
 	@Override
 	public String toString() {
-		return "Paging [page=" + page + ",perPageNum="+ perPageNum + ", rowStart=" + rowStart + ",rowEnd="+rowEnd+"]";
+		return "Paging [page=" + page + ",perPageNum="+ perPageNum + ", "
+		+ "rowStart=" + rowStart + ",rowEnd="+rowEnd+  "]";
 	}
 
 }
