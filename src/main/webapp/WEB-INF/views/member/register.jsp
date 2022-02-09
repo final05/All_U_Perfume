@@ -21,6 +21,13 @@
 			});
 		});
 	});	
+	
+	function nullCheck(){
+		if($("#pw").val() == ""){
+			$("#pwCheck").html("<font color='red'>비밀번호를 입력해주세요.</font>");
+			return false;
+		}
+	}
 </script>  
 <html>
 <head>
@@ -28,12 +35,12 @@
 <title>당신만의 향기, All U Perfume</title>
 </head>
 <body>
-	<form action="/member/registerPro" method="post" enctype="multipart/form-data">
+	<form action="/member/registerPro" method="post" enctype="multipart/form-data" onsubmit="return nullCheck();">
 		아이디: <input type="text" id="id" name="id">
 			  <input type="button" value="중복확인" id="btn" />
     		  <label id="result"></label>
     		  <br />
-		비밀번호: <input type="password" id="pw" name="pw"><br/>
+		비밀번호: <input type="password" id="pw" name="pw"> <label id="pwCheck"></label> <br/>
 		이름: <input type="text" id="name" name="name"><br/>
 		이메일: <input type="text" id="email" name="email" placeholder="example@example.com"><br/>
 		전화번호: <input type="text" id="phone" name="phone" placeholder="01012345678"><br/>

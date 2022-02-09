@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,7 +36,6 @@ public class MemberController {
 	
 	@RequestMapping("main")
 	public String main() {
-		// http://localhost:8080/member/main
 		return "member/main";
 	}
 		
@@ -47,7 +47,6 @@ public class MemberController {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@RequestMapping("registerPro")
 	public String registerPro(MemberDTO dto, MultipartFile file, Model model, HttpServletRequest req) throws ParseException {
-		log.info("======/member/inputPro="+dto);
 		
 		//date타입 형변환 해서 저장하기.
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -94,16 +93,56 @@ public class MemberController {
 		return "member/loginPro";
 	}
 		
+	@RequestMapping("kakaoCheck")
+	public @ResponseBody int check(@RequestBody MemberDTO dto, HttpSession session) {
+		
+		int result = 0;
+		
+		if(service.memberIdCheck(dto.getId()) == 1) {
+			result = 1;
+		} else {
+			result = service.memberKakaoRegister(dto);
+		}
+		
+		session.setAttribute("kid", dto.getId());
+		return result;
+	}
+	
+	@RequestMapping("tokenCheck")
+	public @ResponseBody String tokenCheck(@RequestBody MemberDTO dto, HttpSession session) {
+		
+		session.setAttribute("token", dto.getApi_token());
+		if(dto != null) {
+			dto.setApi_token("K_Token");
+			log.warn(dto.getApi_token());
+		}
+		return dto.getApi_token();
+	}
+	
 	@RequestMapping("logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "member/logout";
 	}
-		
+	
+	@RequestMapping("kLogout")
+	public @ResponseBody String kLogout(HttpSession session) {
+		session.invalidate();
+		return "member/login";
+	}
+	
 	@RequestMapping("userInfo")
 	public String userInfo(HttpSession session, Model model) {
 		String id = (String)session.getAttribute("id");
-		model.addAttribute("MemberDTO", service.memberUserInfo(id));
+		String kid = (String)session.getAttribute("kid");
+		
+		if(id != null) {
+			model.addAttribute("MemberDTO", service.memberUserInfo(id));
+		} else if(kid != null) {
+			model.addAttribute("MemberDTO", service.memberUserInfo(kid));
+		}
+		
+		
 		return "member/userInfo";
 	}
 		
@@ -161,7 +200,7 @@ public class MemberController {
 	public String delete() {
 		return "member/delete";	
 	}
-		
+	
 	@RequestMapping("deletePro")
 	public String deletePro(MemberDTO dto, Model model, HttpSession session) {
 		int result = service.memberLoginCheck(dto);
@@ -172,5 +211,17 @@ public class MemberController {
 		model.addAttribute("result", result);
 		return "member/deletePro";
 	}
-
+	
+	@RequestMapping("kakaoDeletePro")
+	public @ResponseBody int kakaoDeletePro(@RequestBody MemberDTO dto, HttpSession session) {
+		log.warn("kakaoDeletePro // "+dto);
+		int result = 0;
+		int check = service.memberKLoginCheck(dto);
+		if(check == 1) {
+			result = service.memberKakaoDelete(dto);
+			session.invalidate();
+		}
+		return result;
+	}
+	
 }

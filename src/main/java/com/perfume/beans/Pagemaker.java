@@ -14,6 +14,7 @@ public class Pagemaker {
 	private Paging pa; //페이지정보 객체
 	
 	
+	
 	public void setPa(Paging pa) {
 		this.pa = pa;
 	}
@@ -77,5 +78,6 @@ public class Pagemaker {
 									.build();
 		return uriComponents.toUriString();
 	}
-
+	
+	
 }

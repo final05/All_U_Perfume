@@ -104,8 +104,8 @@ public class NoticeController {
 	// 페이징 처리
 	@RequestMapping("notice/list")
 	public String list(Model model, Paging pa, BoardDTO boardDTO, HttpSession session, AdminDTO Adto) {
-		model.addAttribute("list",noticeservice.selectNoticeBoard(pa));
-		int countNoticeBoard = noticeservice.countNoticeBoard();
+		model.addAttribute("notice_list",noticeservice.selectNoticeBoard(pa));
+		// int countNoticeBoard = noticeservice.countNoticeBoard();
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(noticeservice.countNoticeBoard());
