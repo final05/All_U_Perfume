@@ -2,6 +2,7 @@ package com.perfume.controller;
 
 
 import com.perfume.beans.BoardDTO;
+import com.perfume.beans.MemberDTO;
 import com.perfume.beans.Pagemaker;
 import com.perfume.beans.Paging;
 import com.perfume.controller.NoticeController;
@@ -9,6 +10,8 @@ import com.perfume.service.NoticeBoardService;
 import com.perfume.service.RecommendationBoardService;
 
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,13 +36,13 @@ public class RecommendationController {
 	@Setter(onMethod_=@Autowired)
 	private RecommendationBoardService recommendationservice;
 	
-	@RequestMapping("recommendation")
-	public String NoticeList(Model model) {
-		// http://localhost:8080/perfume/recommendation
-		log.info("향수 추천 목록 페이지 진입");
-		model.addAttribute("list", recommendationservice.getrecommendationList());
-		return "board/recommendation/recommendation";		
-	}
+//	@RequestMapping("recommendation")
+//	public String NoticeList(Model model) {
+//		// http://localhost:8080/perfume/recommendation
+//		log.info("향수 추천 목록 페이지 진입");
+//		model.addAttribute("list", recommendationservice.getrecommendationList());
+//		return "board/recommendation/recommendation";		
+//	}
 
 	// 추천 내용 보기 + 조뢰수 증가 + 페이징 처리
 	@RequestMapping("recommendation/recommendationContent")
@@ -95,8 +98,12 @@ public class RecommendationController {
 	// 페이징 처리
 	
 	@RequestMapping("recommendation/list")
-	public String list(Model model, Paging pa, BoardDTO boardDTO) {
-		model.addAttribute("listpage",recommendationservice.selectRecommendationBoard(pa));
+	public String list(Model model, Paging pa, BoardDTO boardDTO, MemberDTO memberDTO, HttpSession session) {
+		model.addAttribute("recommendation_list",recommendationservice.selectRecommendationBoard(pa));
+		session.setAttribute("id", memberDTO.getId());
+		session.setAttribute("kid", memberDTO.getId());
+		session.setAttribute("aid", memberDTO.getId());
+		// log.info(session)
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(recommendationservice.countRecommendationBoard());

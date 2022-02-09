@@ -2,6 +2,7 @@ package com.perfume.controller;
 
 
 import com.perfume.beans.BoardDTO;
+import com.perfume.beans.MemberDTO;
 import com.perfume.beans.Pagemaker;
 import com.perfume.beans.Paging;
 import com.perfume.beans.RE_BoardDTO;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,8 +93,10 @@ public class Q_AController {
 	
 	// Q_A 처리
 	@RequestMapping("q_a/list")
-	public String list(Model model, Paging pa, BoardDTO boardDTO) {
+	public String list(Model model, Paging pa, BoardDTO boardDTO, MemberDTO memberDTO, HttpSession session) {
 		model.addAttribute("q_a_list",q_aservice.selectQ_ABoard(pa));
+		session.setAttribute("id", memberDTO.getId());
+		session.setAttribute("kid", memberDTO.getId());
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(q_aservice.q_areadcount(0));

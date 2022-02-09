@@ -2,6 +2,7 @@ package com.perfume.controller;
 
 import com.perfume.beans.AdminDTO;
 import com.perfume.beans.BoardDTO;
+import com.perfume.beans.MemberDTO;
 import com.perfume.beans.Pagemaker;
 import com.perfume.beans.Paging;
 import com.perfume.controller.NoticeController;
@@ -103,9 +104,11 @@ public class NoticeController {
 	
 	// 페이징 처리
 	@RequestMapping("notice/list")
-	public String list(Model model, Paging pa, BoardDTO boardDTO, HttpSession session, AdminDTO Adto) {
+	public String list(Model model, Paging pa, BoardDTO boardDTO, HttpSession session, AdminDTO Adto, MemberDTO memberDTO) {
 		model.addAttribute("notice_list",noticeservice.selectNoticeBoard(pa));
 		// int countNoticeBoard = noticeservice.countNoticeBoard();
+		session.setAttribute("id", memberDTO.getId());
+		session.setAttribute("kid", memberDTO.getId());
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(noticeservice.countNoticeBoard());

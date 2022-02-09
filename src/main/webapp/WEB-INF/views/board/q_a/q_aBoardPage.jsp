@@ -71,6 +71,18 @@
 	<input type ="button" value = "선택삭제" onclick = "deleteValue();" >
 </c:if>
 
+<c:if test = "${sessionScope.kid != null }">
+	<form action="/perfume/q_a/write" method="post">
+		<input type = "submit" value = "글 쓰기" />
+	</form>	
+</c:if>
+
+<c:if test = "${sessionScope.id != null }">
+	<form action="/perfume/q_a/write" method="post">
+		<input type = "submit" value = "글 쓰기" />
+	</form>	
+</c:if>
+
 <c:if test ="${paging.rowStart == 0 }">
 	
 	<th> 작성된 글이 없습니다. </th>
