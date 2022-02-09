@@ -8,8 +8,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.perfume.beans.BrandDTO;
+import com.perfume.beans.NoteDTO;
 import com.perfume.beans.Paging;
 import com.perfume.beans.PerfumeDTO;
+import com.perfume.beans.ReviewDTO;
 import com.perfume.mybatis.PerfumeMapper;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -58,6 +61,99 @@ public class PerfumeServiceImpl implements PerfumeService{
 	public int keyCount(PerfumeDTO perfume) {
 		return mapper.keyCount(perfume.getKeyword(), perfume.getChoose());
 	}
+
+	@Override
+	public BrandDTO brand(String d_number) {
+		return mapper.brandSearch(d_number);
+	}
+
+	@Override
+	public List<NoteDTO> note(List<String> list) {
+		List<NoteDTO> noteList = new ArrayList();
+		NoteDTO ndto = new NoteDTO();
+		for(int i = 0 ; i < list.size() ; i ++) {
+			ndto.setN_number(list.get(i));
+			noteList.addAll(mapper.noteInfo(ndto));
+		}
+		return noteList;
+	}
+
+	@Override
+	public int reviewInsert(ReviewDTO rdto) {
+		return mapper.reviewInsert(rdto);
+	}
+
+	@Override
+	public List<ReviewDTO> getReview(ReviewDTO rdto) {
+		return mapper.getReview(rdto);
+	}
+
+	@Override
+	public int reviewImg(ReviewDTO rdto) {
+		return mapper.reviewImg(rdto);
+	}
+
+	@Override
+	public int chInsert(ReviewDTO rdto) {
+		return mapper.chInsert(rdto.getP_number(),rdto.getR_number(),rdto.getId());
+	}
+
+	@Override
+	public int chLike(ReviewDTO rdto) {
+		return mapper.chLike(rdto);
+	}
+
+	@Override
+	public int like(ReviewDTO rdto) {
+		return mapper.like(rdto);
+	}
+
+	@Override
+	public int unLike(ReviewDTO rdto) {
+		return mapper.unLike(rdto);
+	}
+
+	@Override
+	public int perInsert(ReviewDTO rdto, PerfumeDTO dto) {
+		return mapper.perInsert(dto.getP_number(),rdto.getId());
+	}
+
+	@Override
+	public int perLikeCh(ReviewDTO rdto) {
+		return mapper.perLikeCh(rdto);
+	}
+
+	@Override
+	public int perLike(PerfumeDTO dto) {
+		return mapper.perLike(dto);
+	}
+
+	@Override
+	public int rchInsert(ReviewDTO rdto) {
+		return mapper.rchInsert(rdto);
+	}
+
+	@Override
+	public int rchLike(ReviewDTO rdto) {
+		return mapper.rchLike(rdto);
+	}
+
+	@Override
+	public List<PerfumeDTO> perlikeRank(PerfumeDTO dto) {
+		return mapper.perlikeRank(dto);
+	}
+
+	@Override
+	public List<PerfumeDTO> relikeRank(ReviewDTO rdto) {
+		return mapper.relikeRank(rdto);
+	}
+
+	@Override
+	public List<PerfumeDTO> reunlikeRank(ReviewDTO rdto) {
+		return mapper.reunlikeRank(rdto);
+	}
+	
+	
 	
 
 

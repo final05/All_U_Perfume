@@ -10,8 +10,8 @@ public class PerfumeDTO  {
 	private String topnote;
 	private String heartnote;
 	private String basenote;
-	private String[] gender;
-	private String[] season;
+	private String gender;
+	private String season;
 	private String d_number;
 	private String  f_pic;
 	private String keyword;
@@ -23,6 +23,7 @@ public class PerfumeDTO  {
 	private String basenote_num;
 	private String result;
 	private String choose;
+	private int f_like_heart;
 
 	
 

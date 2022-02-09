@@ -2,8 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
-<a href="/main/list">리스트</a>
-프로페이지</br>
+
+프로페이지
+<input type="button" value="메인으로 가기"  onclick="window.location = '/main/list'"></br>
 
 <style>
 #menu{
@@ -14,8 +15,6 @@
  justify-content: left;
  align-items: left;
 }
-
-
 #perfumelist{
  padding: 0px;
  margin: 0px;
@@ -23,7 +22,10 @@
  height: 0vh;
  justify-content: center;
  align-items: center;
+
+
 }
+
 
 #page {
 position: fixed; 
@@ -37,16 +39,52 @@ dd {
   display: none;
 }
 
+#rank{
+align-items: left;
+}
+
 
 
 
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
+
+
+<c:if test="${sessionScope.id == null && sessionScope.kid == null}">
+	<script>
+		alert("로그인 후 사용 가능합니다.");
+		window.location="/member/login";
+	</script>
+</c:if>
+
+<c:if test="${sessionScope.id != null}">
+	${sessionScope.id}님, 환영합니다!</br>
+	<input type="button" value="로그아웃" onclick="window.location='/member/logout'" />
+	<input type="button" value="회원정보" onclick="window.location='/member/userInfo'" />
+	<input type="button" value="설문하러 가기"  onclick="window.location = '/survey/surveyStart'">
+	<input type="button" value="메인으로 가기"  onclick="window.location = '/main/list'">
+	<input type="button" value="향수 추천페이지"  onclick="window.location = '/perfume/recommendation'">
+	<input type="button" value="공지사항 페이지"  onclick="window.location = '/perfume/notice'">
+	
+</c:if>
+
+<c:if test="${sessionScope.kid != null}">
+	${sessionScope.kid}님, 환영합니다!</br>
+	<input type="button" value="로그아웃" onclick="kakaoLogout();" />
+	<input type="button" value="회원정보" onclick="window.location='/member/userInfo'" />
+	<input type="button" value="설문하러 가기"  onclick="window.location = '/survey/surveyStart'">
+	<input type="button" value="메인으로 가기"  onclick="window.location = '/main/list'">
+	<input type="button" value="향수 추천페이지"  onclick="window.location = '/perfume/recommendation'">
+	<input type="button" value="공지사항 페이지"  onclick="window.location = '/perfume/notice'">
+	
+</c:if>
 
 <h3>카테고리</h3> </br> 
-<input type="button" value="메인으로 가기"  onclick="window.location = '/main/list'">
+
 <div class="menu">
 	<form action="/main/search" method="post">
  
@@ -92,7 +130,6 @@ dd {
 </form>
 </div>
 
-
 <div id="perfumelist">
 
 <table border="1">
@@ -108,6 +145,84 @@ dd {
 
 </div>
 
+
+<div id="likerank" border="1">
+<h3>향수 좋아요 랭킹</h3> </br>
+	<table>
+		<tr>
+			<td>게시글 번호</td>
+			<td>향수이름</td>
+			<td>좋아요</td>
+		</tr>
+		
+
+	<c:forEach items ="${prank}" var="p">
+		<tr>
+			<td><a href="/main/detail?p_number=${p.p_number}&f_name=${p.f_name}">
+			${p.p_number}</a></td>
+			<td><a href="/main/detail?p_number=${p.p_number}&f_name=${p.f_name}">
+			${p.f_name}</a></td>
+			<td>${p.f_like_heart}</td>
+		</tr>
+	</c:forEach>
+		</table>
+</div>
+<div id = "reviewrank">
+<h3>리뷰 좋아요 랭킹</h3> </br>
+	<table>
+		<tr>
+			<td>작성자</td>
+			<td>게시글 번호</td>
+			<td>제품 이름</td>
+			<td>리뷰 내용</td>
+			<td>리뷰 좋아요 수</td>
+		</tr>
+		
+
+	<c:forEach items ="${rerank}" var="re">
+		<tr>
+			<td>${re.writer}님</td>
+			<td><a href="/main/detail?p_number=${re.p_number}&f_name=${re.f_name}">
+			${re.p_number}</a></td>
+			<td><a href="/main/detail?p_number=${re.p_number}&f_name=${re.f_name}">
+			${re.f_name}</a></td>
+			<td>${re.like_re}</td>
+			<td>${re.like_re_heart}</td>
+		</tr>
+	</c:forEach>
+		</table>
+		
+</div>
+<div id="reviewunlike">
+<h3>리뷰 싫어요 랭킹</h3> </br>
+	<table>
+		<tr>
+			<td>작성자</td>
+			<td>게시글 번호</td>
+			<td>제품 이름</td>
+			<td>리뷰 내용</td>
+			<td>리뷰 싫어요 수</td>
+		</tr>
+		
+
+	<c:forEach items ="${unrerank}" var="unre">
+		<tr>
+			<td>${unre.writer}님</td>
+			<td><a href="/main/detail?p_number=${unre.p_number}&f_name=${unre.f_name}">
+			${unre.p_number}</a></td>
+			<td><a href="/main/detail?p_number=${unre.p_number}&f_name=${unre.f_name}">
+			${unre.f_name}</a></td>
+			<td>${unre.unlike_re}</td>
+			<td>${unre.unlike_re_heart}</td>
+		</tr>
+	</c:forEach>
+		</table>
+
+</div>
+
+
+
+
 <script>
 $('dt').on('click', function() {
 
@@ -118,6 +233,7 @@ $('dt').on('click', function() {
 
 	  function slideUp() {
 	    $('dt').removeClass('on').next().slideUp();
+	    $("input").prop("checked", false);
 	  }
 
 	  $(this).hasClass('on') ? slideUp() : slideDown(this);
