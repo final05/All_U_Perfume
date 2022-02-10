@@ -59,10 +59,10 @@
 	 
 	<sql id="search">
 		<if test="searchType != null">
-			<if test="searchType == 't'.toString()">AND subject LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 's'.toString()">AND subject LIKE '%' || #{keyword} || '%'</if>
 			<if test="searchType == 'c'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
 			<if test="searchType == 'w'.toString()">AND WRITER LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'tc'.toString()">AND (subject LIKE '%' || #{keyword} || '%') or (CONTENT LIKE '%' || #{keyword} || '%')</if>
+			<if test="searchType == 'sc'.toString()">AND (subject LIKE '%' || #{keyword} || '%') or (CONTENT LIKE '%' || #{keyword} || '%')</if>
 		</if>
 	</sql>
 	

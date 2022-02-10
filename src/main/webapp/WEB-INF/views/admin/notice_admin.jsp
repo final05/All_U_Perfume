@@ -87,7 +87,6 @@
 		</c:if>
 		<c:if test="${pageMaker.totalCount != 0}">
 		<th> <input id = "allCheck" type = "checkbox" name = "allCheck"/> </th>
-		<th> 선택 <th>
 		<th> 글번호 </th>
 		<th> 글제목 </th>
 		<th> 작성자 </th>
@@ -97,10 +96,10 @@
 	</tr> 
 		<c:forEach items="${notice_list}" var="boardDTO" > 
 		<tr>
-		<td> <input name = "RowCheck" type = "checkbox" value="${boardDTO.b_number}"/></td>
+		<td> <input name = "RowCheck" type = "checkbox" value="${boardDTO.b_number }" /></td>
 		<td> ${boardDTO.b_number} </td>
 		<td> <a href="/perfume/notice/noticeContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> </td>
-		<td> ${boardDTO.writer} </td>
+		<td> ${boardDTO.auth} </td>
 		<td> ${boardDTO.reg_date} </td>
 		<td> ${boardDTO.readcount} </td>
 	</tr>
@@ -115,9 +114,9 @@
 	  <div class="search">
     <select name="searchType">
       <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
-      <option value="t"<c:out value="${scri.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
+      <option value="s"<c:out value="${scri.searchType eq 's' ? 'selected' : ''}"/>>제목</option>
       <option value="c"<c:out value="${scri.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
-      <option value="tc"<c:out value="${scri.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
+      <option value="sc"<c:out value="${scri.searchType eq 'sc' ? 'selected' : ''}"/>>제목+내용</option>
     </select>
 
     <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>

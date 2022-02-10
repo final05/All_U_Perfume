@@ -109,9 +109,9 @@
 	  <div class="search">
     <select name="searchType">
       <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
-      <option value="t"<c:out value="${scri.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
+      <option value="s"<c:out value="${scri.searchType eq 's' ? 'selected' : ''}"/>>제목</option>
       <option value="c"<c:out value="${scri.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
-      <option value="tc"<c:out value="${scri.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
+      <option value="sc"<c:out value="${scri.searchType eq 'sc' ? 'selected' : ''}"/>>제목+내용</option>
     </select>
 
     <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
@@ -120,7 +120,7 @@
     <script>
       $(function(){
         $('#searchBtn').click(function() {
-          self.location = "notice/list" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+          self.location = "list" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
         });
       });   
     </script>
@@ -137,7 +137,7 @@
 		</c:forEach>
 		
 		<c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
-			<a href="notice/list${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
+			<a href="list${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
 		</c:if>
 	</ul>
 </div>
