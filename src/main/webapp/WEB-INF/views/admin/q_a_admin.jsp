@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
-    
-<h1> 향수 추천 게시판 </h1>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
+<title> Q&A 게시판 </title>
+<h1> Q&A 게시판 </h1>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type = "text/javascript">
@@ -29,10 +31,10 @@
 		function deleteValue(){
 			var url = "/admin/notice_admin_delete"; // controller 로 보내고자 하는 url
 			var valueArr = new Array();
-			var recommendation_list = $("input[name='RowCheck']");
-			for (var i = 0; i < recommendation_list.length; i++) {
-				if(recommendation_list[i].checked){ // 선택되어 있으면 배열에 값을 저장함 
-					valueArr.push(recommendation_list[i].value);
+			var q_a_list = $("input[name='RowCheck']");
+			for (var i = 0; i < notice_list.length; i++) {
+				if(q_a_list[i].checked){ // 선택되어 있으면 배열에 값을 저장함 
+					valueArr.push(q_a_list[i].value);
 				}
 			}
 			if (valueArr.length == 0) { // 선택된 값이 0이면 = 배열에 저장된 값이 없으면
@@ -49,7 +51,7 @@
 						console.log(jdata);
 						if(jdata == 1) {
 							alert("삭제 성공");
-							location.replace("recommendation_admin") // 리스트 페이지 샤로고침
+							location.replace("q_n_admin") // 리스트 페이지 샤로고침
 						}
 						else {
 							alert("삭제 실패");
@@ -66,10 +68,11 @@
 		window.location="/admin/login";
 	</script>
 </c:if>
-	
+
+  
 <c:if test ="${sessionScope.aid != null}" >
 
-	<form action="/perfume/recommendation/write" method="post">
+	<form action="/perfume/q_a/write" method="post">
 		<input type = "submit" value = "글 쓰기" />
 	</form>	
 		<form action="main" method="post">
@@ -93,11 +96,11 @@
 		<th> 조회수 </th>
 		</c:if>
 	</tr> 
-		<c:forEach items="${recommendation_list}" var="boardDTO" > 
+		<c:forEach items="${q_a_list}" var="boardDTO" > 
 		<tr>
-		<td> <input name = "RowCheck" type = "checkbox" value="${boardDTO.b_number }" /></td>
+		<td> <input name = "RowCheck" type = "checkbox" value="${boardDTO.b_number}"/></td>
 		<td> ${boardDTO.b_number} </td>
-		<td> <a href="/perfume/recommendation/recommendationContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> </td>
+		<td> <a href="/perfume/q_a/q_aContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> </td>
 		<td> ${boardDTO.writer} </td>
 		<td> ${boardDTO.reg_date} </td>
 		<td> ${boardDTO.readcount} </td>
@@ -105,7 +108,7 @@
 	</c:forEach>
 </table>
 
-	<form action = "/admin/recommendaion_admin" method = "post">
+	<form action = "/admin/q_a_admin" method = "post">
 		<input type = "hidden" name = "pageNum" value = "1">
 		<input type = "hidden" name = "amount" value = "10">
 	</form>
@@ -125,7 +128,7 @@
     <script>
       $(function(){
         $('#searchBtn').click(function() {
-          self.location = "/admin/recommendaion_admin" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+          self.location = "/admin/q_a_admin" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
         });
       });   
     </script>
@@ -142,7 +145,7 @@
 		</c:forEach>
 		
 		<c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
-			<a href="/admin/recommendaion_admin${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
+			<a href="/admin/q_a_admin${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
 		</c:if>
 	</ul>
 

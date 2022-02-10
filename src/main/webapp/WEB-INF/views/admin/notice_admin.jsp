@@ -74,31 +74,63 @@
 	<form action="/perfume/notice/write" method="post">
 		<input type = "submit" value = "글 쓰기" />
 	</form>	
-
+		<form action="main" method="post">
+		<input type = "submit" value = "관리자 메인 페이지" />
+	</form>
 	<input type ="button" value = "선택삭제" onclick = "deleteValue();" >
 </c:if>
 
 <table border = "1" >
 	<tr>
+		<c:if test="${pageMaker.totalCount == 0}">
+    		<p>작성된 게시글이 없습니다.</p>
+		</c:if>
+		<c:if test="${pageMaker.totalCount != 0}">
 		<th> <input id = "allCheck" type = "checkbox" name = "allCheck"/> </th>
+		<th> 선택 <th>
 		<th> 글번호 </th>
 		<th> 글제목 </th>
 		<th> 작성자 </th>
 		<th> 작성일 </th>
 		<th> 조회수 </th>
+		</c:if>
 	</tr> 
 		<c:forEach items="${notice_list}" var="boardDTO" > 
 		<tr>
 		<td> <input name = "RowCheck" type = "checkbox" value="${boardDTO.b_number}"/></td>
 		<td> ${boardDTO.b_number} </td>
 		<td> <a href="/perfume/notice/noticeContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> </td>
-		<td> ${boardDTO.auth} </td>
+		<td> ${boardDTO.writer} </td>
 		<td> ${boardDTO.reg_date} </td>
 		<td> ${boardDTO.readcount} </td>
 	</tr>
 	</c:forEach>
 </table>
 
+	<form action = "/admin/notice_admin" method = "post">
+		<input type = "hidden" name = "pageNum" value = "1">
+		<input type = "hidden" name = "amount" value = "10">
+	</form>
+	
+	  <div class="search">
+    <select name="searchType">
+      <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
+      <option value="t"<c:out value="${scri.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
+      <option value="c"<c:out value="${scri.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
+      <option value="tc"<c:out value="${scri.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
+    </select>
+
+    <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
+
+    <button id="searchBtn" type="button">검색</button>
+    <script>
+      $(function(){
+        $('#searchBtn').click(function() {
+          self.location = "/admin/notice_admin" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+        });
+      });   
+    </script>
+  </div>
 
 <div id="page">
 	<ul>
@@ -111,7 +143,7 @@
 		</c:forEach>
 		
 		<c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
-			<a href="notice_admin${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
+			<a href="/admin/notice_admin${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
 		</c:if>
 	</ul>
 

@@ -38,24 +38,32 @@
 		update tbl_board set readcount = readcount + 1 where b_number = #{b_number}
 	</update>
 	
-	<!-- 총 게시글 갯수 출력 -->
-	<select id = "countNoticeBoard" resultType ="int" >
+<!-- 키워드 검색 -->
+     <select id="selectNoticeBoard" resultType="com.perfume.beans.BoardDTO" parameterType="com.perfume.beans.SearchCriteria">
+   	 <![CDATA[
+    	select rm, b_number, subject, content, writer, auth, reg_date, readcount from
+       		(select rownum rm, b_number, subject, content, writer, auth, reg_date, readcount from 
+            	(select * from tbl_board where 1 = 1 and boardNum = 3]]>
+             <include refid="search"></include> <![CDATA[ 
+             	order by b_number desc)
+       		 order by b_number desc) 
+    	where rm between #{rowStart} and #{rowEnd}
+    ]]>
+    </select>
+	
+	<select id="countNoticeBoard" parameterType="com.perfume.beans.SearchCriteria" resultType="int">
 		select count (*) from tbl_board where boardnum = 3
+			<include refid="search"></include>	
+		   		AND b_number > 0
 	</select>
+	 
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">AND subject LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'c'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tc'.toString()">AND (subject LIKE '%' || #{keyword} || '%') or (CONTENT LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>
 	
-	<!-- 페이징 처리 후 게시글 조회 + 검색 -->
-	<select id ="selectNoticeBoard" resultType="com.perfume.beans.BoardDTO" parameterType="com.perfume.beans.Paging" >
-		<![CDATA[
-			select rm, b_number, subject, content, auth, reg_date, readcount from 
-				(select rownum rm, b_number, subject, content, auth, reg_date, readcount from
-					(select * from tbl_board where boardnum = 3 order by b_number desc) 
-						order by b_number desc) where rm between #{rowStart} and #{rowEnd}
-		]]>
-			
-	</select>
-	
-	<!--  선택 삭제 -->
-	<delete id="noticedelete_2">
-		delete tbl_board where b_number = #{b_number}
-	</delete>
 </mapper>
+	

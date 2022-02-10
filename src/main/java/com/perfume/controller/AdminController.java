@@ -24,6 +24,7 @@ import com.perfume.beans.AdminDTO;
 import com.perfume.beans.BoardDTO;
 import com.perfume.service.AdminService;
 import com.perfume.service.NoticeBoardService;
+import com.perfume.service.Q_ABoardService;
 import com.perfume.service.RecommendationBoardService;
 
 import lombok.extern.log4j.Log4j;
@@ -40,6 +41,8 @@ public class AdminController {
 	private NoticeBoardService noticeservice;
 	@Autowired
 	private RecommendationBoardService recommendationservice;
+	@Autowired
+	private Q_ABoardService qaservice;
 
 	
 	// 관리자 메인
@@ -88,26 +91,37 @@ public class AdminController {
 	
 	// 공지 페이지 페이징 처리
 	@RequestMapping("notice_admin")
-	public String notice_list(Model model, Paging pa, BoardDTO boardDTO,HttpSession session, AdminDTO Adto) {
+	public String notice_list(Model model, Paging pa, BoardDTO boardDTO,HttpSession session, AdminDTO Adto, SearchCriteria scri) {
 		// log.info("==========notice admin======" + boardDTO.getSubject());
 		// log.info("list jsp aid세션 확인" + session.getAttribute("aid"));
-		model.addAttribute("notice_list",noticeservice.selectNoticeBoard(pa));
+		model.addAttribute("notice_list",noticeservice.selectNoticeBoard(scri));
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
-		pagemaker.setTotalCount(service.countNoticeBoard());
+		pagemaker.setTotalCount(noticeservice.countNoticeBoard(scri));
 		model.addAttribute("pageMaker", pagemaker);
 		return "admin/notice_admin";
 	}
 	
 	// 향수 추천 페이지 페이징 처리
 	@RequestMapping("recommendation_admin")
-	public String list(Model model, Paging pa, BoardDTO boardDTO, SearchCriteria scri) {
+	public String recommendation_list(Model model, Paging pa, BoardDTO boardDTO, SearchCriteria scri) {
 		model.addAttribute("recommendation_list",recommendationservice.selectRecommendationBoard(scri));
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(recommendationservice.countRecommendationBoard(scri));
 		model.addAttribute("pageMaker", pagemaker);
 		return "admin/recommendation_admin";
+	}
+	
+	// Q_A 추천 페이지 페이징 처리
+	@RequestMapping("q_a_admin")
+	public String q_a_list(Model model, Paging pa, BoardDTO boardDTO, SearchCriteria scri) {
+		model.addAttribute("q_a_list", qaservice.selectQ_aBoard(scri));
+		Pagemaker pagemaker = new Pagemaker(); // 객체생성
+		pagemaker.setPa(pa);
+		pagemaker.setTotalCount(qaservice.countQ_aBoard(scri));
+		model.addAttribute("pageMaker", pagemaker);
+		return "admin/q_a_admin";
 	}
 	
 	// 게시글 선택 삭제

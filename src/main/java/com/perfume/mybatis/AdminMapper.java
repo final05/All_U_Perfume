@@ -17,11 +17,4 @@ public interface AdminMapper {
 	
 	public int readcount(int b_number);
 	
-	// 게시글 총 갯수
-	public int countNoticeBoard();
-	
-	// 페이징 처리 게시글 조회
-	public List<BoardDTO> selectNoticeBoard(Paging pa);
-	
-	public List<BoardDTO> cate(BoardDTO board);
 }

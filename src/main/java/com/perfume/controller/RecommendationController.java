@@ -48,9 +48,9 @@ public class RecommendationController {
 
 	// 추천 내용 보기 + 조뢰수 증가 + 페이징 처리
 	@RequestMapping("recommendation/recommendationContent")
-	public String content(Model model, RedirectAttributes rttr, BoardDTO boardDTO, int b_number) {
+	public String content(Model model, RedirectAttributes rttr, BoardDTO boardDTO, int b_number, SearchCriteria scri) {
 		model.addAttribute("boardDTO", recommendationservice.recommendaionContent(boardDTO));
-		recommendationservice.readcount(b_number);
+		recommendationservice.countRecommendationBoard(scri);
 		return "board/recommendation/recommendationContent";
 	}
 	

@@ -49,7 +49,7 @@
 						console.log(jdata);
 						if(jdata == 1) {
 							alert("삭제 성공");
-							location.replace("notice_admin") // 리스트 페이지 샤로고침
+							location.replace("recommendation_admin") // 리스트 페이지 샤로고침
 						}
 						else {
 							alert("삭제 실패");
@@ -79,12 +79,17 @@
 
 <table border = "1" >
 	<tr>
-		<th> 선택 </th>
+		<c:if test="${pageMaker.totalCount == 0}">
+    		<p>작성된 게시글이 없습니다.</p>
+		</c:if>
+		<c:if test="${pageMaker.totalCount != 0}">
+		<th> <input id = "allCheck" type = "checkbox" name = "allCheck"/> </th>
 		<th> 글번호 </th>
 		<th> 글제목 </th>
 		<th> 작성자 </th>
 		<th> 작성일 </th>
 		<th> 조회수 </th>
+		</c:if>
 	</tr> 
 		<c:forEach items="${recommendation_list}" var="boardDTO" > 
 		<tr>
@@ -99,16 +104,6 @@
 </table>
 
 	<form action = "/perfume/recommendation/recommendationBoardPage" method = "post">
-		<div id ="search">
-			<button type = "submit"> 검색 </button>
-			<input type = "text" name = "searchName">
-			<select class = "search-select" name = "searchType">
-				<option value = "subject"> 제목 </option>
-				<option value = "contetn"> 내용 </option>
-				<option value = "writer"> 작성자 </option>
-				<option value = "titcont"> 제목 + 내용 </option>
-			</select>
-		</div>
 		<input type = "hidden" name = "pageNum" value = "1">
 		<input type = "hidden" name = "amount" value = "10">
 	</form>
@@ -116,10 +111,10 @@
 	  <div class="search">
     <select name="searchType">
       <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
-      <option value="t"<c:out value="${scri.searchType eq 's' ? 'selected' : ''}"/>>제목</option>
+      <option value="t"<c:out value="${scri.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
       <option value="c"<c:out value="${scri.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
       <option value="w"<c:out value="${scri.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
-      <option value="tc"<c:out value="${scri.searchType eq 'sc' ? 'selected' : ''}"/>>제목+내용</option>
+      <option value="tc"<c:out value="${scri.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
     </select>
 
     <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
@@ -128,25 +123,24 @@
     <script>
       $(function(){
         $('#searchBtn').click(function() {
-          self.location = "list" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+          self.location = "recommendation/list" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
         });
       });   
     </script>
   </div>
-	
+
 <div id="page">
 	<ul>
 		<c:if test="${pageMaker.prev}">
-			<a href="${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전</a>
+			<a href="${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a>
 		</c:if>
 			
 		<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-			<a href="${pageMaker.makeSearch(idx)}">${idx}</a>	
+			<a href="${pageMaker.makeQuery(idx)}">${idx}</a>	
 		</c:forEach>
 		
 		<c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
-			<a href="recommendation_admin${pageMaker.makeSearch(pageMaker.endPage+1)}">다음</a>
+			<a href="recommendation/list${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
 		</c:if>
 	</ul>
-
 </div>

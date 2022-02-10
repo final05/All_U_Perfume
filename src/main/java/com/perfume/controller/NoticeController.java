@@ -5,6 +5,7 @@ import com.perfume.beans.BoardDTO;
 import com.perfume.beans.MemberDTO;
 import com.perfume.beans.Pagemaker;
 import com.perfume.beans.Paging;
+import com.perfume.beans.SearchCriteria;
 import com.perfume.controller.NoticeController;
 import com.perfume.service.NoticeBoardService;
 
@@ -104,22 +105,22 @@ public class NoticeController {
 	
 	// 페이징 처리
 	@RequestMapping("notice/list")
-	public String list(Model model, Paging pa, BoardDTO boardDTO, HttpSession session, AdminDTO Adto, MemberDTO memberDTO) {
-		model.addAttribute("notice_list",noticeservice.selectNoticeBoard(pa));
+	public String list(Model model, Paging pa, BoardDTO boardDTO, HttpSession session, AdminDTO Adto, MemberDTO memberDTO, SearchCriteria scri) {
+		model.addAttribute("notice_list",noticeservice.selectNoticeBoard(scri));
 		// int countNoticeBoard = noticeservice.countNoticeBoard();
 		log.info("로그찍히는지실험");
 		session.setAttribute("id", memberDTO.getId());
 		session.setAttribute("kid", memberDTO.getId());
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
-		pagemaker.setTotalCount(noticeservice.countNoticeBoard());
+		pagemaker.setTotalCount(noticeservice.countNoticeBoard(scri));
 		model.addAttribute("pageMaker", pagemaker);
 		return "board/notice/noticeBoardPage"; 
 	}
 	
 	// 게시글 선택 삭제
 	@RequestMapping("notice/delete_2")
-	public @ResponseBody String noticedelete_2(HttpServletRequest request, String b_number) {
+	public @ResponseBody String noticedelete_2(HttpServletRequest request, String b_number,SearchCriteria scri) {
 		// http://localhost:8080/perfume/notice/delete_2
 		log.info("동작은 하느냐 ===================" + b_number);
 		String[] ajaxMsg = request.getParameterValues("valueArr");

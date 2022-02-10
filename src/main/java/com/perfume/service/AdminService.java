@@ -15,7 +15,5 @@ public interface AdminService {
 	public int member_delete(MemberDTO memberdto); 
 	
 	public int readcount(int b_number); // 조회수 증가
-	public int countNoticeBoard(); // 게시글 총 갯수
-	public List<BoardDTO> selectNoticeBoard(Paging pa);
 
 }

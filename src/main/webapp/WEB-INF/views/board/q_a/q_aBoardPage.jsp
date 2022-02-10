@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<title>Q&A 게시판</title>
+<title> Q&A 게시판 </title>
 <h1> Q&A 게시판 </h1>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -29,7 +29,7 @@
 			});
 		});
 		function deleteValue(){
-			var url = "delete_2"; // controller 로 보내고자 하는 url
+			var url = "/admin/notice_admin_delete"; // controller 로 보내고자 하는 url
 			var valueArr = new Array();
 			var q_a_list = $("input[name='RowCheck']");
 			for (var i = 0; i < q_a_list.length; i++) {
@@ -43,15 +43,15 @@
 				var chk = confirm ("정말 삭제하시겠습니까?");
 				$.ajax({
 					url : url, // 전송 url
-					traditional : true,
+					traditional : true, // 배열갑 java로 전송하기
 					data : {
 						valueArr : valueArr // 보내고자 하는 data 변수 설정
 					},
 					success: function(jdata) {
 						console.log(jdata);
-						if(jdata = 1) {
+						if(jdata == 1) {
 							alert("삭제 성공");
-							location.replace("q_a_admin") // 리스트 페이지 샤로고침
+							location.replace("q_n_admin") // 리스트 페이지 샤로고침
 						}
 						else {
 							alert("삭제 실패");
@@ -62,52 +62,61 @@
 		}
 	</script>
 	
-
-
-<c:if test ="${sessionScope.aid != null}" >
-	<form action="/perfume/q_a/write" method="post">
-		<input type = "submit" value = "글 쓰기" />
-	</form>	
-	<input type ="button" value = "선택삭제" onclick = "deleteValue();" >
-</c:if>
-
-<c:if test = "${sessionScope.kid != null }">
-	<form action="/perfume/q_a/write" method="post">
-		<input type = "submit" value = "글 쓰기" />
-	</form>	
-</c:if>
-
-<c:if test = "${sessionScope.id != null }">
-	<form action="/perfume/q_a/write" method="post">
-		<input type = "submit" value = "글 쓰기" />
-	</form>	
-</c:if>
-
-<c:if test ="${paging.rowStart == 0 }">
-	
-	<th> 작성된 글이 없습니다. </th>
+	<form action = "write" method = "post">
+		<input type = "submit" value = "글 작성" />
+	</form>
 
 <table border = "1" >
 	<tr>
+		<c:if test="${pageMaker.totalCount == 0}">
+    		<p>작성된 게시글이 없습니다.</p>
+		</c:if>
+		<c:if test="${pageMaker.totalCount != 0}">
 		<th> <input id = "allCheck" type = "checkbox" name = "allCheck"/> </th>
 		<th> 글번호 </th>
 		<th> 글제목 </th>
 		<th> 작성자 </th>
 		<th> 작성일 </th>
 		<th> 조회수 </th>
+		</c:if>
 	</tr> 
 		<c:forEach items="${q_a_list}" var="boardDTO" > 
 		<tr>
 		<td> <input name = "RowCheck" type = "checkbox" value="${boardDTO.b_number}"/></td>
 		<td> ${boardDTO.b_number} </td>
 		<td> <a href="/perfume/q_a/q_aContent?b_number=${boardDTO.b_number}">${boardDTO.subject}</a> </td>
-		<td> ${boardDTO.auth} </td>
+		<td> ${boardDTO.writer} </td>
 		<td> ${boardDTO.reg_date} </td>
 		<td> ${boardDTO.readcount} </td>
 	</tr>
 	</c:forEach>
 </table>
 
+	<form action = "/perfume/q_a/q_aBoardPage" method = "post">
+		<input type = "hidden" name = "pageNum" value = "1">
+		<input type = "hidden" name = "amount" value = "10">
+	</form>
+	
+	  <div class="search">
+    <select name="searchType">
+      <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
+      <option value="t"<c:out value="${scri.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
+      <option value="c"<c:out value="${scri.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
+      <option value="w"<c:out value="${scri.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
+      <option value="tc"<c:out value="${scri.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
+    </select>
+
+    <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
+
+    <button id="searchBtn" type="button">검색</button>
+    <script>
+      $(function(){
+        $('#searchBtn').click(function() {
+          self.location = "q_a/list" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+        });
+      });   
+    </script>
+  </div>
 
 <div id="page">
 	<ul>
@@ -120,9 +129,8 @@
 		</c:forEach>
 		
 		<c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
-			<a href="a_aBoardPage${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
+			<a href="q_a/list${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
 		</c:if>
 	</ul>
 
 </div>
-</c:if>

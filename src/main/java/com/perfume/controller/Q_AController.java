@@ -6,6 +6,7 @@ import com.perfume.beans.MemberDTO;
 import com.perfume.beans.Pagemaker;
 import com.perfume.beans.Paging;
 import com.perfume.beans.RE_BoardDTO;
+import com.perfume.beans.SearchCriteria;
 import com.perfume.controller.NoticeController;
 import com.perfume.service.NoticeBoardService;
 import com.perfume.service.Q_ABoardService;
@@ -24,12 +25,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Data;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
+import oracle.net.aso.q;
 
 
 @Controller
@@ -93,15 +96,26 @@ public class Q_AController {
 	
 	// Q_A 처리
 	@RequestMapping("q_a/list")
-	public String list(Model model, Paging pa, BoardDTO boardDTO, MemberDTO memberDTO, HttpSession session) {
-		model.addAttribute("q_a_list",q_aservice.selectQ_ABoard(pa));
+	public String list(Model model, Paging pa, BoardDTO boardDTO, MemberDTO memberDTO, HttpSession session, SearchCriteria scri) {
+		model.addAttribute("q_a_list",q_aservice.selectQ_aBoard(scri));
 		session.setAttribute("id", memberDTO.getId());
 		session.setAttribute("kid", memberDTO.getId());
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
-		pagemaker.setTotalCount(q_aservice.q_areadcount(0));
+		pagemaker.setTotalCount(q_aservice.countQ_aBoard(scri));
 		model.addAttribute("pageMaker", pagemaker);
 		return "board/q_a/q_aBoardPage";
+	}
+	
+	// 게시글 선택 삭제
+	@RequestMapping("q_a/delete_2")
+	public @ResponseBody String noticedelete_2(HttpServletRequest request, String b_number,SearchCriteria scri) {
+		String[] ajaxMsg = request.getParameterValues("valueArr");
+		int size = ajaxMsg.length;
+		for (int i=0; i<size; i++) {
+			q_aservice.q_adelete(ajaxMsg[i]);
+		}
+		return "1";
 	}
 	
 	// Q_A 게시판 게시글 답변

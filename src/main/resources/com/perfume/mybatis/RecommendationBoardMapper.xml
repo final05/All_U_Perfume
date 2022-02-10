@@ -38,10 +38,11 @@
 		update tbl_board set readcount = readcount + 1 where b_number = #{b_number}
 	</update>
 	
-		<!-- 총 게시글 갯수 출력 -->
+		<!-- 총 게시글 갯수 출력 
 	<select id = "countRecommendationBoard" resultType ="int" >
 		select count (*) from tbl_board where boardnum = 2
 	</select>
+	-->
 	
 	<!-- 페이징 처리 후 게시글 조회 
 	<select id ="selectRecommendationBoard" resultType="com.perfume.beans.BoardDTO" parameterType="com.perfume.beans.Paging" >
@@ -54,24 +55,39 @@
 	</select>
 	-->
 	
-	<!--  -->
+	<!--  
 	<select id="selectRecommendationBoard" resultType="com.perfume.beans.BoardDTO" parameterType="com.perfume.beans.SearchCriteria">
+	<![CDATA[
 		SELECT  rm, b_number, subject, content, writer, reg_date, readcount FROM 
 			( select rownum rm, b_number, subject, content, writer, reg_date, readcount from
 		       ( select * from tbl_board where boardnum = 2 order by b_number desc)
-		       	order by b_number desc) WHERE 1=1 
+		       	order by b_number desc) where 1=1 ]]>
 		         	<include refid="search"></include>
-		                       ) MP
+		                    <![CDATA[ ORDER BY B_number DESC
 		where rm between #{rowStart} and #{rowEnd}
-		ORDER BY B_number DESC
+		 ]]>
 	</select>
+	-->
 	
-	<select id="listCount" parameterType="com.perfume.beans.SearchCriteria" resultType="int">
+	<!-- 키워드 검색 -->
+    <select id="selectRecommendationBoard" resultType="com.perfume.beans.BoardDTO" parameterType="com.perfume.beans.SearchCriteria">
+   	 <![CDATA[
+    	select rm, b_number, subject, content, writer, reg_date, readcount from
+       		(select rownum rm, b_number, subject, content, writer, reg_date, readcount from 
+            	(select * from tbl_board where 1 = 1 and boardNum = 2]]>
+             <include refid="search"></include> <![CDATA[ 
+             	order by b_number desc)
+       		 order by b_number desc) 
+    	where rm between #{rowStart} and #{rowEnd}
+    ]]>
+    </select>
+	
+	<select id="countRecommendationBoard" parameterType="com.perfume.beans.SearchCriteria" resultType="int">
 		select count (*) from tbl_board where boardnum = 2
 			<include refid="search"></include>	
 		   		AND b_number > 0
 	</select>
-	
+	 
 	<sql id="search">
 		<if test="searchType != null">
 			<if test="searchType == 't'.toString()">AND subject LIKE '%' || #{keyword} || '%'</if>
@@ -80,5 +96,5 @@
 			<if test="searchType == 'tc'.toString()">AND (subject LIKE '%' || #{keyword} || '%') or (CONTENT LIKE '%' || #{keyword} || '%')</if>
 		</if>
 	</sql>
-	
+	 
 </mapper>

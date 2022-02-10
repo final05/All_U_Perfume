@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.perfume.beans.BoardDTO;
 import com.perfume.beans.Paging;
+import com.perfume.beans.SearchCriteria;
 import com.perfume.mybatis.NoticeBoardMapper;
 
 import lombok.Setter;
@@ -55,13 +56,16 @@ public class NoticeBoardServiceImpl implements NoticeBoardService {
 	}
 
 	@Override
-	public int countNoticeBoard() {
-		return noticemapeer.countNoticeBoard();
+	public int countNoticeBoard(SearchCriteria scri) {
+		// TODO Auto-generated method stub
+		return noticemapeer.countNoticeBoard(scri);
 	}
 
 	@Override
-	public List<BoardDTO> selectNoticeBoard(Paging pa) {
-		return noticemapeer.selectNoticeBoard(pa);
+	public List<BoardDTO> selectNoticeBoard(SearchCriteria scri) {
+		// TODO Auto-generated method stub
+		return noticemapeer.selectNoticeBoard(scri);
 	}
+
 
 }

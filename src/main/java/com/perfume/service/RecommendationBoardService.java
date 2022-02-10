@@ -12,16 +12,10 @@ public interface RecommendationBoardService {
 	public BoardDTO recommendaionContent(BoardDTO board); // readcount
 	public int recommendationdelete(int b_number); // 게시글 삭제
 	public int recommendationupdate(BoardDTO board); // 게시글 업데이트
-	public int readcount(int b_number); // 조회수 증가
 	
 	// 게시글 총 갯수
 	public int countRecommendationBoard(SearchCriteria scri);
 	
 	// 페이징 처리 게시글 조회
 	public List<BoardDTO> selectRecommendationBoard(SearchCriteria scri);
-	
-	// 게시글 목록 조회
-
-	
-
 }

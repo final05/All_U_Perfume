@@ -42,16 +42,4 @@ public class AdminServiceImpl implements AdminService{
 		return mapper.readcount(b_number);
 	}
 
-	@Override
-	public int countNoticeBoard() {
-		// TODO Auto-generated method stub
-		return mapper.countNoticeBoard();
-	}
-
-	@Override
-	public List<BoardDTO> selectNoticeBoard(Paging pa) {
-		// TODO Auto-generated method stub
-		return mapper.selectNoticeBoard(pa);
-	}
-
 }
