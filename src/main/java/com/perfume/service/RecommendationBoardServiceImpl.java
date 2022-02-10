@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.perfume.beans.BoardDTO;
 import com.perfume.beans.Paging;
+import com.perfume.beans.SearchCriteria;
 import com.perfume.mybatis.NoticeBoardMapper;
 import com.perfume.mybatis.RecommendationBoardMapper;
 
@@ -54,25 +55,17 @@ public class RecommendationBoardServiceImpl implements RecommendationBoardServic
 		return recommendationmapper.readcount(b_number);
 	}
 
+	// 게시글 검색
 	@Override
-	public int countRecommendationBoard() {
+	public int countRecommendationBoard(SearchCriteria scri) {
 		// TODO Auto-generated method stub
-		return recommendationmapper.countRecommendationBoard();
+		return recommendationmapper.countRecommendationBoard(scri);
 	}
-
+	
+	// 검색 + 페이징 처리
 	@Override
-	public List<BoardDTO> selectRecommendationBoard(Paging pa) {
+	public List<BoardDTO> selectRecommendationBoard(SearchCriteria scri) {
 		// TODO Auto-generated method stub
-		return recommendationmapper.selectRecommendationBoard(pa);
+		return recommendationmapper.selectRecommendationBoard(scri);
 	}
-
-	@Override
-	public int recommendation_serach(BoardDTO board) {
-		// TODO Auto-generated method stub
-		return recommendationmapper.recommendaion_search(board);
-	}
-
-
-
-
 }

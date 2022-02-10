@@ -98,7 +98,7 @@
 	</c:forEach>
 </table>
 
-	<form action = "/perfume/recommendation/list" method = "post">
+	<form action = "/perfume/recommendation/recommendationBoardPage" method = "post">
 		<div id ="search">
 			<button type = "submit"> 검색 </button>
 			<input type = "text" name = "searchName">
@@ -113,18 +113,39 @@
 		<input type = "hidden" name = "amount" value = "10">
 	</form>
 	
+	  <div class="search">
+    <select name="searchType">
+      <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
+      <option value="t"<c:out value="${scri.searchType eq 's' ? 'selected' : ''}"/>>제목</option>
+      <option value="c"<c:out value="${scri.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
+      <option value="w"<c:out value="${scri.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
+      <option value="tc"<c:out value="${scri.searchType eq 'sc' ? 'selected' : ''}"/>>제목+내용</option>
+    </select>
+
+    <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
+
+    <button id="searchBtn" type="button">검색</button>
+    <script>
+      $(function(){
+        $('#searchBtn').click(function() {
+          self.location = "list" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+        });
+      });   
+    </script>
+  </div>
+	
 <div id="page">
 	<ul>
 		<c:if test="${pageMaker.prev}">
-			<a href="${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a>
+			<a href="${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전</a>
 		</c:if>
 			
 		<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-			<a href="${pageMaker.makeQuery(idx)}">${idx}</a>	
+			<a href="${pageMaker.makeSearch(idx)}">${idx}</a>	
 		</c:forEach>
 		
 		<c:if test="${pageMaker.next && pageMaker.endPage > 0 }">
-			<a href="recommendation_admin${pageMaker.makeQuery(pageMaker.endPage+1)}">다음</a>
+			<a href="recommendation_admin${pageMaker.makeSearch(pageMaker.endPage+1)}">다음</a>
 		</c:if>
 	</ul>
 

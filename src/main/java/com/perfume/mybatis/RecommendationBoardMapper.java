@@ -17,10 +17,13 @@ public interface RecommendationBoardMapper {
 	public int countRecommendationBoard();
 	
 	// 페이징 처리 게시글 조회
-	public List<BoardDTO> selectRecommendationBoard(Paging pa);
+	// public List<BoardDTO> selectRecommendationBoard(Paging pa);
 	
-	// 페이징 처리 , 게시글 조회
-	public List<BoardDTO> recommendationList(SearchCriteria scri);
+	// 게시글 총 갯수
+	public int countRecommendationBoard(SearchCriteria scri);
+	
+	// 페이징 처리 게시글 조회
+	public List<BoardDTO> selectRecommendationBoard(SearchCriteria scri);
 	
 	// 게시글 총 갯수
 	

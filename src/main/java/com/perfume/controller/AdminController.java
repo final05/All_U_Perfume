@@ -19,6 +19,7 @@ import com.perfume.beans.FileInfo;
 import com.perfume.beans.MemberDTO;
 import com.perfume.beans.Pagemaker;
 import com.perfume.beans.Paging;
+import com.perfume.beans.SearchCriteria;
 import com.perfume.beans.AdminDTO;
 import com.perfume.beans.BoardDTO;
 import com.perfume.service.AdminService;
@@ -100,11 +101,11 @@ public class AdminController {
 	
 	// 향수 추천 페이지 페이징 처리
 	@RequestMapping("recommendation_admin")
-	public String list(Model model, Paging pa, BoardDTO boardDTO) {
-		model.addAttribute("recommendation_list",recommendationservice.selectRecommendationBoard(pa));
+	public String list(Model model, Paging pa, BoardDTO boardDTO, SearchCriteria scri) {
+		model.addAttribute("recommendation_list",recommendationservice.selectRecommendationBoard(scri));
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
-		pagemaker.setTotalCount(recommendationservice.countRecommendationBoard());
+		pagemaker.setTotalCount(recommendationservice.countRecommendationBoard(scri));
 		model.addAttribute("pageMaker", pagemaker);
 		return "admin/recommendation_admin";
 	}
