@@ -32,7 +32,7 @@
 			var url = "/admin/notice_admin_delete"; // controller 로 보내고자 하는 url
 			var valueArr = new Array();
 			var q_a_list = $("input[name='RowCheck']");
-			for (var i = 0; i < notice_list.length; i++) {
+			for (var i = 0; i < q_a_list.length; i++) {
 				if(q_a_list[i].checked){ // 선택되어 있으면 배열에 값을 저장함 
 					valueArr.push(q_a_list[i].value);
 				}
@@ -51,7 +51,7 @@
 						console.log(jdata);
 						if(jdata == 1) {
 							alert("삭제 성공");
-							location.replace("q_n_admin") // 리스트 페이지 샤로고침
+							location.replace("q_a_admin") // 리스트 페이지 샤로고침
 						}
 						else {
 							alert("삭제 실패");
