@@ -102,12 +102,12 @@ public class RecommendationController {
 	@RequestMapping("recommendation/list")
 	public String recommendation_list(Model model, Paging pa, BoardDTO boardDTO, MemberDTO memberDTO, HttpSession session, AdminDTO adminDTO, SearchCriteria scri) {
 		model.addAttribute("recommendation_list",recommendationservice.selectRecommendationBoard(scri));
-		session.setAttribute("id", memberDTO.getId());
-		session.setAttribute("aid", adminDTO.getAid());
+		// session.setAttribute("id", memberDTO.getId());
+		// session.setAttribute("aid", adminDTO.getAid());
 		// String id = (String)session.getAttribute("id");
 		// String kid = (String)session.getAttribute("kid");
-		session.getAttribute("id");
-		log.info("향수 추천 jsp id세션 확인 =============== " + session.getAttribute("id"));
+		// session.getAttribute("id");
+		// log.info("향수 추천 jsp id세션 확인 =============== " + session.getAttribute("id"));
 		Pagemaker pagemaker = new Pagemaker(); // 객체생성
 		pagemaker.setPa(pa);
 		pagemaker.setTotalCount(recommendationservice.countRecommendationBoard(scri));

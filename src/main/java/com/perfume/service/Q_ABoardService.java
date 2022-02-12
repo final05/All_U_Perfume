@@ -2,10 +2,12 @@ package com.perfume.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.perfume.beans.BoardDTO;
 import com.perfume.beans.Paging;
-import com.perfume.beans.RE_BoardDTO;
 import com.perfume.beans.SearchCriteria;
+@Component
 
 public interface Q_ABoardService {
 	public int q_ainsert(BoardDTO board); // 게시글 작성
@@ -18,9 +20,7 @@ public interface Q_ABoardService {
 	
 	// 페이징 처리 게시글 목록
 	public List<BoardDTO> selectQ_aBoard(SearchCriteria scri);
-	
-	// 답글 작성하기
-	public int q_a_re_insert(RE_BoardDTO reboard);
+	public int re_Q_a_Insert(BoardDTO board);
 	
 
 }

@@ -62,9 +62,14 @@
 		}
 	</script>
 	
-	<form action = "write" method = "post">
+	
+	
+	
+
+		<form action = "write" method = "post">
 		<input type = "submit" value = "글 작성" />
 	</form>
+
 
 <table border = "1" >
 	<tr>

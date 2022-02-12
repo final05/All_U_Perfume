@@ -41,13 +41,13 @@
 <!-- 키워드 검색 -->
     <select id="selectQ_aBoard" resultType="com.perfume.beans.BoardDTO" parameterType="com.perfume.beans.SearchCriteria">
    	 <![CDATA[
-    	select rm, b_number, subject, content, writer, reg_date, readcount from
-       		(select rownum rm, b_number, subject, content, writer, reg_date, readcount from 
+    	select rm, b_number, subject, content, writer, reg_date, readcount, ref, re_step, depth from
+       		(select rownum rm, b_number, subject, content, writer, reg_date, readcount, ref, re_step, depth from 
             	(select * from tbl_board where 1 = 1 and boardNum = 1]]>
              <include refid="search"></include> <![CDATA[ 
              	order by b_number desc)
        		 order by b_number desc) 
-    	where rm between #{rowStart} and #{rowEnd}
+    	where rm between #{rowStart} and #{rowEnd} 
     ]]>
     </select>
 	
@@ -65,5 +65,32 @@
 			<if test="searchType == 'sc'.toString()">AND (subject LIKE '%' || #{keyword} || '%') or (CONTENT LIKE '%' || #{keyword} || '%')</if>
 		</if>
 	</sql>
+	
+	<!-- 최상위 부모글 번호 생성 
+	<select id = "o" resultType="int">
+		select nvl(max(ref)+1,'1') as ref from tbl_board
+	-->
+	
+	<!-- 같은 ref(최상위부모값)을 가진 것 중 현재 답글을 달 게시물의 순번보다 큰 것을 +1로 하여 밀리게 함
+	<select id = "updateSetp" parameterType="com.perfume.beans.BoardDTO">
+		update tbl_board set re_step = re_step + 1 where ref = # {ref} and re_step > #{re_step}
+	</select>
+	-->
+	
+	<!-- 현재 답글의 순번을 생성 
+	<select id = "getStepMax" parameterType="com.perfume.beans.BoardDTO" resultType= "int">
+		select decode(#{re_step),'0',(max(re_step)+1), #{re_step}+1) as re_step from tbl_board where ref=#{ref}
+	</select>
+	-->
+	
+	<!--  답글 입력 -->
+	<insert id = "re_Q_a_Insert" parameterType = "com.perfume.beans.BoardDTO">
+		insert into tbl_board(boardnum,b_number, ref, re_step, depth, writer, password, subject, content) 
+			values('1',SEQ_TBL_BOARD.nextval, #{ref}, #{re_step}, #{depth}+1, #{writer, jdbcType=VARCHAR},
+				#{password, jdbcType=VARCHAR},#{subject, jdbcType=VARCHAR},#{content, jdbcType=VARCHAR})
+		<selectKey resultType="BigDecimal" keyProperty="b_number" order="AFTER">
+  			select max(b_number) as b_number FROM tbl_board
+   		</selectKey>	
+	</insert>
 	
 </mapper>

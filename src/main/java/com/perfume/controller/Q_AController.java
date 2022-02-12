@@ -5,7 +5,6 @@ import com.perfume.beans.BoardDTO;
 import com.perfume.beans.MemberDTO;
 import com.perfume.beans.Pagemaker;
 import com.perfume.beans.Paging;
-import com.perfume.beans.RE_BoardDTO;
 import com.perfume.beans.SearchCriteria;
 import com.perfume.controller.NoticeController;
 import com.perfume.service.NoticeBoardService;
@@ -26,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Data;
@@ -94,7 +94,7 @@ public class Q_AController {
 		return "board/q_a/deletePro";
 	}
 	
-	// Q_A 처리
+	// Q_A 리스트 처리
 	@RequestMapping("q_a/list")
 	public String list(Model model, Paging pa, BoardDTO boardDTO, MemberDTO memberDTO, HttpSession session, SearchCriteria scri) {
 		model.addAttribute("q_a_list",q_aservice.selectQ_aBoard(scri));
@@ -118,14 +118,16 @@ public class Q_AController {
 		return "1";
 	}
 	
-	// Q_A 게시판 게시글 답변
-	@RequestMapping("q_a/boardReply")
-	public String boardReply(HttpServletRequest request, HttpServletResponse response) {
-		return "board/q_a/ReBoardWriteForm";
-	}
+	@RequestMapping("q_a/re_write") 
+	public String re_write(Model model) { 
+		//원글의 정보를 답글 쓰기 화면에서 알 수 있도록 한다. 
+		return "board/q_a/re_write"; 
+		}
 	
-	@RequestMapping("q_a/insertBoardReply")
-	public String insertBoardReply (HttpServletRequest request, HttpServletResponse response, RE_BoardDTO reboardDTO) {
-		return "board/q_a/ReBoardWritePro";
+	@RequestMapping("q_a/re_writePro")
+	public String re_writePro(BoardDTO boardDTO, Model model) {
+		model.addAttribute("result", q_aservice.re_Q_a_Insert(boardDTO));
+		// 화면에서 입력한 정보를 DB에 저장한 후 목록 화면으로 연결
+		return "board/q_a/re_writePro";
 	}
 }

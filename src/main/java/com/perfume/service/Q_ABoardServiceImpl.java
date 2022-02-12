@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.perfume.beans.BoardDTO;
 import com.perfume.beans.Paging;
-import com.perfume.beans.RE_BoardDTO;
 import com.perfume.beans.SearchCriteria;
 import com.perfume.mybatis.Q_ABoardMapper;
 
@@ -55,16 +54,17 @@ public class Q_ABoardServiceImpl implements Q_ABoardService {
 		return qamapper.selectQ_aBoard(scri);
 	}
 
-	@Override
-	public int q_a_re_insert(RE_BoardDTO reboard) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	@Override
 	public int q_areadcount(int b_number) {
 		// TODO Auto-generated method stub
 		return qamapper.q_areadcount(b_number);
+	}
+
+	@Override
+	public int re_Q_a_Insert(BoardDTO board) {
+		// TODO Auto-generated method stub
+		return qamapper.re_Q_a_Insert(board);
 	}
 
 

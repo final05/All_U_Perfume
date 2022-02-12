@@ -26,7 +26,7 @@
 	<input type="button" value="메인으로 가기"  onclick="window.location = '/main/list'">
 	<input type="button" value="향수 추천페이지"  onclick="window.location = '/perfume/recommendation/list'">
 	<input type="button" value="공지사항 페이지"  onclick="window.location = '/perfume/notice/list'">
-	
+	<input type="button" value="Q&A 페이지"  onclick="window.location = '/perfume/q_a/list'">
 </c:if>
 
 <c:if test="${sessionScope.kid != null}">
@@ -37,7 +37,7 @@
 	<input type="button" value="메인으로 가기"  onclick="window.location = '/main/list'">
 	<input type="button" value="향수 추천페이지"  onclick="window.location = '/perfume/recommendation/list'">
 	<input type="button" value="공지사항 페이지"  onclick="window.location = '/perfume/notice/list'">
-	
+	<input type="button" value="Q&A 페이지"  onclick="window.location = '/perfume/q_a/list'">
 </c:if>
 
 <script>
